@@ -7,28 +7,36 @@ interface NodeDefinition {
   title: string;
   icon: string;
   category: string;
+  courseId: string;
   unitIds: string[];
   x: number;
   y: number;
 }
 
 const NODE_DEFINITIONS: NodeDefinition[] = [
-  { id: "node-fundamentals", title: "Fundamentos", icon: "📦", category: "fundamentals", unitIds: ["java-datos-vs-informacion", "java-variable-concepto", "java-asignacion", "java-constantes", "java-nombres-reglas", "java-tipo-dato"], x: 400, y: 60 },
-  { id: "node-conventions", title: "Convenciones", icon: "📝", category: "conventions", unitIds: ["java-camelcase", "java-snake-case", "java-hungarian-notation"], x: 150, y: 180 },
-  { id: "node-primitives", title: "Tipos Primitivos", icon: "🔢", category: "primitives", unitIds: ["java-int", "java-double-float", "java-boolean", "java-char", "java-byte-short-long"], x: 650, y: 260 },
-  { id: "node-operators", title: "Operadores", icon: "➗", category: "operators", unitIds: ["java-op-aritmeticos", "java-op-comparacion", "java-modulo"], x: 400, y: 340 },
-  { id: "node-logic", title: "Lógica", icon: "🧠", category: "logic", unitIds: ["java-not", "java-and", "java-or"], x: 400, y: 440 },
+  { id: "node-fundamentals", title: "Fundamentos", icon: "📦", category: "fundamentals", courseId: "intro-programacion", unitIds: ["java-datos-vs-informacion", "java-variable-concepto", "java-asignacion", "java-constantes", "java-nombres-reglas", "java-tipo-dato"], x: 400, y: 60 },
+  { id: "node-conventions", title: "Convenciones", icon: "📝", category: "conventions", courseId: "intro-programacion", unitIds: ["java-camelcase", "java-snake-case", "java-hungarian-notation"], x: 150, y: 180 },
+  { id: "node-primitives", title: "Tipos Primitivos", icon: "🔢", category: "primitives", courseId: "intro-programacion", unitIds: ["java-int", "java-double-float", "java-boolean", "java-char", "java-byte-short-long"], x: 650, y: 260 },
+  { id: "node-typing", title: "Tipado", icon: "🔤", category: "typing", courseId: "intro-programacion", unitIds: [], x: 150, y: 340 },
+  { id: "node-operators", title: "Operadores", icon: "➗", category: "operators", courseId: "logica-programacion", unitIds: ["java-op-aritmeticos", "java-op-comparacion", "java-modulo"], x: 400, y: 340 },
+  { id: "node-logic", title: "Lógica", icon: "🧠", category: "logic", courseId: "logica-programacion", unitIds: ["java-not", "java-and", "java-or"], x: 400, y: 440 },
+  // Bases de datos — grilla propia por curso
+  { id: "node-bd-modelado", title: "Modelado", icon: "🗄️", category: "bd-modelado", courseId: "bases-de-datos", unitIds: ["bd-entidad-atributo", "bd-relacion"], x: 400, y: 180 },
+  { id: "node-bd-sql", title: "SQL", icon: "📊", category: "bd-sql", courseId: "bases-de-datos", unitIds: ["bd-sql-select"], x: 400, y: 340 },
 ];
 
 const NODE_CONNECTIONS: [string, string][] = [
   ["node-fundamentals", "node-conventions"],
   ["node-fundamentals", "node-primitives"],
+  ["node-primitives", "node-typing"],
   ["node-primitives", "node-operators"],
   ["node-operators", "node-logic"],
+  ["node-bd-modelado", "node-bd-sql"],
 ];
 
-export function buildGameMap(): GameNode[] {
-  return NODE_DEFINITIONS.map((def) => ({
+export function buildGameMap(courseId?: string): GameNode[] {
+  const defs = courseId ? NODE_DEFINITIONS.filter((d) => d.courseId === courseId) : NODE_DEFINITIONS;
+  return defs.map((def) => ({
     id: def.id,
     knowledgeUnitIds: def.unitIds,
     title: def.title,
@@ -37,13 +45,18 @@ export function buildGameMap(): GameNode[] {
     connections: NODE_CONNECTIONS
       .filter(([a, b]) => a === def.id || b === def.id)
       .flatMap(([a, b]) => (a === def.id ? b : a === def.id ? [] : a))
-      .filter((id): id is string => id !== def.id),
+      .filter((id): id is string => id !== def.id)
+      .filter((cid) => !courseId || NODE_DEFINITIONS.find((n) => n.id === cid)?.courseId === courseId),
     status: "locked" as const,
   }));
 }
 
 export function getNodeById(nodeId: string): GameNode | undefined {
   return buildGameMap().find((n) => n.id === nodeId);
+}
+
+export function getCourseIdForNode(nodeId: string): string | undefined {
+  return NODE_DEFINITIONS.find((n) => n.id === nodeId)?.courseId;
 }
 
 export function getUnitsForNode(nodeId: string): KnowledgeUnit[] {

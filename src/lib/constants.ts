@@ -33,6 +33,8 @@ export const CATEGORY_LABELS: Record<string, string> = {
   primitives: "Tipos Primitivos",
   operators: "Operadores",
   logic: "Lógica",
+  "bd-modelado": "Modelado BD",
+  "bd-sql": "SQL",
 };
 
 export const CATEGORY_ORDER = [
@@ -42,6 +44,8 @@ export const CATEGORY_ORDER = [
   "primitives",
   "operators",
   "logic",
+  "bd-modelado",
+  "bd-sql",
 ] as const;
 
 export const KNOWLEDGE_TYPE_LABELS: Record<string, string> = {

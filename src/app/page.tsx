@@ -53,23 +53,65 @@ export default function DashboardPage() {
         />
       </div>
 
-      <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
+      <div className="grid md:grid-cols-3 gap-4 sm:gap-6">
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <span>🗺️</span> Mapa del Mundo
+              <span>📦</span> Intro Programación
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-muted-foreground mb-4">
-              Explora los conceptos de Java y desbloquea nuevos nodos.
-            </p>
-            <Link href="/map">
+            <p className="text-sm text-muted-foreground mb-4">Fundamentos, variables y tipos.</p>
+            <Link href="/c/intro-programacion/map">
               <Button className="w-full">Ir al Mapa</Button>
             </Link>
           </CardContent>
         </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <span>🧠</span> Lógica
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground mb-4">Operadores y lógica booleana.</p>
+            <Link href="/c/logica-programacion/map">
+              <Button className="w-full">Ir al Mapa</Button>
+            </Link>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <span>🗄️</span> Bases de Datos
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground mb-4">Modelado y SQL.</p>
+            <Link href="/c/bases-de-datos/map">
+              <Button className="w-full">Ir al Mapa</Button>
+            </Link>
+          </CardContent>
+        </Card>
+      </div>
+      <div className="grid md:grid-cols-1 gap-4 sm:gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <span>🗺️</span> Mapa legacy (compat)</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground mb-4">Vista completa sin filtrar por materia.</p>
+            <Link href="/map">
+              <Button className="w-full" variant="outline">
+                Ir al Mapa
+              </Button>
+            </Link>
+          </CardContent>
+        </Card>
+      </div>
 
+      <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">

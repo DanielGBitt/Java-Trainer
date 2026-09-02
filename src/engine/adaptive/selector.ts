@@ -1,7 +1,10 @@
 import { exercises } from "@/data/java/exercises";
+import { basesDeDatosExercises } from "@/data/bases-de-datos/exercises";
 import { getAllMastery } from "../mastery/index";
 import { storage } from "@/storage";
 import type { Exercise, MasteryDimension } from "@/types/exercise";
+
+const allExercises: Exercise[] = [...exercises, ...basesDeDatosExercises];
 
 export interface SelectionContext {
   unitIds?: string[];
@@ -15,7 +18,7 @@ export function selectNextExercise(
   const progress = storage.getProgress();
   const attempts = progress?.attempts ?? [];
 
-  let candidates = [...exercises];
+  let candidates = [...allExercises];
 
   // Filter by units if specified
   if (context.unitIds && context.unitIds.length > 0) {
@@ -65,7 +68,7 @@ export function selectNextExercise(
     // Priority 4: Variety - prefer different types
     const lastAttempt = attempts[attempts.length - 1];
     if (lastAttempt) {
-      const lastExercise = exercises.find((e) => e.id === lastAttempt.exerciseId);
+      const lastExercise = allExercises.find((e) => e.id === lastAttempt.exerciseId);
       if (lastExercise && lastExercise.type === exercise.type) {
         score -= 5;
       }
