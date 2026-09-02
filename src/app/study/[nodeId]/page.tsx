@@ -7,24 +7,40 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MasteryBar } from "@/components/progress/MasteryBar";
+import { getNodeById, getUnitsForNode } from "@/game/map/builder";
 import { getUnitById } from "@/engine/learning/knowledge";
-import { getMastery } from "@/engine/mastery/index";
-import { getRelatedUnits } from "@/engine/learning/knowledge";
+import { getAggregateMastery } from "@/engine/mastery/aggregate";
 import { CATEGORY_LABELS } from "@/lib/constants";
+import { relationships } from "@/data/java/relationships";
+import { buildGameMap } from "@/game/map/builder";
 
 export default function StudyPage() {
   const params = useParams();
   const nodeId = params.nodeId as string;
 
-  const unit = useMemo(() => getUnitById(nodeId), [nodeId]);
-  const mastery = useMemo(() => getMastery(nodeId), [nodeId]);
-  const related = useMemo(() => getRelatedUnits(nodeId), [nodeId]);
+  const node = useMemo(() => getNodeById(nodeId), [nodeId]);
+  const units = useMemo(() => getUnitsForNode(nodeId), [nodeId]);
+  const unitIds = useMemo(() => units.map((u) => u.id), [units]);
+  const mastery = useMemo(() => getAggregateMastery(unitIds), [unitIds]);
 
-  if (!unit) {
+  const related = useMemo(() => {
+    const allRelated = relationships.filter(
+      (r) => unitIds.includes(r.sourceId) || unitIds.includes(r.targetId)
+    );
+    const seen = new Set<string>();
+    return allRelated.filter((r) => {
+      const key = [r.sourceId, r.targetId].sort().join("-");
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  }, [unitIds]);
+
+  if (!node || units.length === 0) {
     return (
       <div className="max-w-3xl mx-auto p-6 text-center">
         <h1 className="text-2xl font-bold text-gray-900 mb-4">
-          Unidad no encontrada
+          Nodo no encontrado
         </h1>
         <Link href="/map">
           <Button>Volver al Mapa</Button>
@@ -42,18 +58,14 @@ export default function StudyPage() {
         >
           ← Volver al Mapa
         </Link>
-        <h1 className="text-3xl font-bold text-gray-900">{unit.title}</h1>
+        <h1 className="text-3xl font-bold text-gray-900">{node.title}</h1>
         <div className="flex items-center gap-2 mt-2">
           <Badge variant="secondary">
-            {CATEGORY_LABELS[unit.category] ?? unit.category}
-          </Badge>
-          <Badge variant="outline">
-            Dificultad: {unit.difficulty}/3
+            {CATEGORY_LABELS[units[0].category] ?? units[0].category}
           </Badge>
         </div>
       </div>
 
-      {/* Mastery Progress */}
       {mastery && (
         <Card>
           <CardHeader>
@@ -84,51 +96,54 @@ export default function StudyPage() {
         </Card>
       )}
 
-      {/* Knowledge Items */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">Contenido</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {unit.knowledge.map((item) => (
-            <div
-              key={item.id}
-              className="p-4 rounded-lg bg-gray-50 border border-gray-100"
-            >
-              <div className="flex items-center gap-2 mb-2">
-                <Badge variant="outline" className="text-xs">
-                  {item.type}
-                </Badge>
-              </div>
-              <p className="text-sm text-gray-800 whitespace-pre-wrap">
-                {item.content}
-              </p>
-              {item.context && (
-                <p className="text-xs text-gray-500 mt-2 italic">
-                  {item.context}
-                </p>
-              )}
-              {item.correctedContent && (
-                <div className="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded">
-                  <p className="text-xs font-medium text-yellow-800 mb-1">
-                    Corrección:
-                  </p>
-                  <p className="text-sm text-yellow-900">
-                    {item.correctedContent}
-                  </p>
-                  {item.correctionExplanation && (
-                    <p className="text-xs text-yellow-700 mt-1">
-                      {item.correctionExplanation}
-                    </p>
-                  )}
+      {units.map((unit) => (
+        <Card key={unit.id}>
+          <CardHeader>
+            <CardTitle className="text-lg">{unit.title}</CardTitle>
+            <Badge variant="outline">
+              Dificultad: {unit.difficulty}/3
+            </Badge>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {unit.knowledge.map((item) => (
+              <div
+                key={item.id}
+                className="p-4 rounded-lg bg-gray-50 border border-gray-100"
+              >
+                <div className="flex items-center gap-2 mb-2">
+                  <Badge variant="outline" className="text-xs">
+                    {item.type}
+                  </Badge>
                 </div>
-              )}
-            </div>
-          ))}
-        </CardContent>
-      </Card>
+                <p className="text-sm text-gray-800 whitespace-pre-wrap">
+                  {item.content}
+                </p>
+                {item.context && (
+                  <p className="text-xs text-gray-500 mt-2 italic">
+                    {item.context}
+                  </p>
+                )}
+                {item.correctedContent && (
+                  <div className="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded">
+                    <p className="text-xs font-medium text-yellow-800 mb-1">
+                      Corrección:
+                    </p>
+                    <p className="text-sm text-yellow-900">
+                      {item.correctedContent}
+                    </p>
+                    {item.correctionExplanation && (
+                      <p className="text-xs text-yellow-700 mt-1">
+                        {item.correctionExplanation}
+                      </p>
+                    )}
+                  </div>
+                )}
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      ))}
 
-      {/* Related Units */}
       {related.length > 0 && (
         <Card>
           <CardHeader>
@@ -137,13 +152,24 @@ export default function StudyPage() {
           <CardContent>
             <div className="flex flex-wrap gap-2">
               {related.map((r) => {
-                const relatedId =
-                  r.sourceId === nodeId ? r.targetId : r.sourceId;
-                const relatedUnit = getUnitById(relatedId);
+                const relatedUnitId = unitIds.includes(r.sourceId)
+                  ? r.targetId
+                  : r.sourceId;
+                const relatedUnit = getUnitById(relatedUnitId);
+                const allNodes = buildGameMap();
+                const targetNode = allNodes.find((n) =>
+                  n.knowledgeUnitIds.includes(relatedUnitId)
+                );
                 return (
-                  <Link key={relatedId} href={`/study/${relatedId}`}>
-                    <Badge variant="secondary" className="hover:bg-gray-200 cursor-pointer">
-                      {relatedUnit?.title ?? relatedId}
+                  <Link
+                    key={relatedUnitId}
+                    href={targetNode ? `/study/${targetNode.id}` : "#"}
+                  >
+                    <Badge
+                      variant="secondary"
+                      className="hover:bg-gray-200 cursor-pointer"
+                    >
+                      {relatedUnit?.title ?? relatedUnitId}
                     </Badge>
                   </Link>
                 );
@@ -153,7 +179,6 @@ export default function StudyPage() {
         </Card>
       )}
 
-      {/* Action Buttons */}
       <div className="flex gap-4">
         <Link href={`/practice/${nodeId}`} className="flex-1">
           <Button className="w-full" size="lg">

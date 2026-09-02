@@ -1,4 +1,6 @@
 import type { GameNode } from "@/types/game";
+import type { KnowledgeUnit } from "@/types/knowledge";
+import { getUnitById } from "@/engine/learning/knowledge";
 
 interface NodeDefinition {
   id: string;
@@ -38,4 +40,16 @@ export function buildGameMap(): GameNode[] {
       .filter((id): id is string => id !== def.id),
     status: "locked" as const,
   }));
+}
+
+export function getNodeById(nodeId: string): GameNode | undefined {
+  return buildGameMap().find((n) => n.id === nodeId);
+}
+
+export function getUnitsForNode(nodeId: string): KnowledgeUnit[] {
+  const node = getNodeById(nodeId);
+  if (!node) return [];
+  return node.knowledgeUnitIds
+    .map((id) => getUnitById(id))
+    .filter((u): u is KnowledgeUnit => u !== undefined);
 }

@@ -12,8 +12,8 @@ import { Feedback } from "@/components/exercises/Feedback";
 import { MasteryBar } from "@/components/progress/MasteryBar";
 import { selectNextExercise } from "@/engine/adaptive/selector";
 import { submitAnswer } from "@/engine/evaluation/index";
-import { getMastery } from "@/engine/mastery/index";
-import { getUnitById } from "@/engine/learning/knowledge";
+import { getNodeById, getUnitsForNode } from "@/game/map/builder";
+import { getAggregateMastery } from "@/engine/mastery/aggregate";
 import type { Exercise } from "@/types/exercise";
 import type { Attempt } from "@/types/attempt";
 
@@ -21,11 +21,13 @@ export default function PracticePage() {
   const params = useParams();
   const nodeId = params.nodeId as string;
 
-  const unit = useMemo(() => getUnitById(nodeId), [nodeId]);
-  const mastery = useMemo(() => getMastery(nodeId), [nodeId]);
+  const node = useMemo(() => getNodeById(nodeId), [nodeId]);
+  const units = useMemo(() => getUnitsForNode(nodeId), [nodeId]);
+  const unitIds = useMemo(() => units.map((u) => u.id), [units]);
+  const mastery = useMemo(() => getAggregateMastery(unitIds), [unitIds]);
 
   const [currentExercise, setCurrentExercise] = useState<Exercise | null>(
-    () => selectNextExercise({ unitId: nodeId })
+    () => selectNextExercise({ unitIds })
   );
   const [feedback, setFeedback] = useState<{
     correct: boolean;
@@ -72,17 +74,17 @@ export default function PracticePage() {
   );
 
   const handleNextExercise = useCallback(() => {
-    const exercise = selectNextExercise({ unitId: nodeId });
+    const exercise = selectNextExercise({ unitIds });
     setCurrentExercise(exercise);
     setFeedback(null);
     startTimeRef.current = Date.now();
-  }, [nodeId]);
+  }, [unitIds]);
 
-  if (!unit) {
+  if (!node || units.length === 0) {
     return (
       <div className="max-w-3xl mx-auto p-6 text-center">
         <h1 className="text-2xl font-bold text-gray-900 mb-4">
-          Unidad no encontrada
+          Nodo no encontrado
         </h1>
         <Link href="/map">
           <Button>Volver al Mapa</Button>
@@ -99,10 +101,10 @@ export default function PracticePage() {
             href={`/study/${nodeId}`}
             className="text-sm text-blue-600 hover:text-blue-800 mb-1 inline-block"
           >
-            ← Volver a {unit.title}
+            ← Volver a {node.title}
           </Link>
           <h1 className="text-2xl font-bold text-gray-900">
-            Practicar: {unit.title}
+            Practicar: {node.title}
           </h1>
         </div>
         <div className="text-right text-sm text-gray-500">
@@ -120,7 +122,6 @@ export default function PracticePage() {
         </div>
       </div>
 
-      {/* Mastery Display */}
       {mastery && (
         <Card>
           <CardContent className="pt-4">
@@ -142,7 +143,6 @@ export default function PracticePage() {
         </Card>
       )}
 
-      {/* Exercise */}
       {currentExercise ? (
         <div className="space-y-4">
           {!feedback ? (

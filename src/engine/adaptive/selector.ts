@@ -4,7 +4,7 @@ import { storage } from "@/storage";
 import type { Exercise, MasteryDimension } from "@/types/exercise";
 
 export interface SelectionContext {
-  unitId?: string;
+  unitIds?: string[];
   preferredDimension?: MasteryDimension;
 }
 
@@ -17,9 +17,11 @@ export function selectNextExercise(
 
   let candidates = [...exercises];
 
-  // Filter by unit if specified
-  if (context.unitId) {
-    candidates = candidates.filter((e) => e.knowledgeUnitId === context.unitId);
+  // Filter by units if specified
+  if (context.unitIds && context.unitIds.length > 0) {
+    candidates = candidates.filter((e) =>
+      context.unitIds!.includes(e.knowledgeUnitId)
+    );
   }
 
   if (candidates.length === 0) return null;
@@ -104,5 +106,5 @@ export function selectReviewExercise(): Exercise | null {
   // Pick a random due unit
   const unitId = dueUnits[Math.floor(Math.random() * dueUnits.length)];
 
-  return selectNextExercise({ unitId });
+  return selectNextExercise({ unitIds: [unitId] });
 }

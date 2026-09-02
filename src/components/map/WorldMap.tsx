@@ -40,7 +40,7 @@ export function WorldMap({ nodes, onNodeClick }: WorldMapProps) {
     <div className="relative w-full overflow-auto">
       <svg
         viewBox="0 0 800 520"
-        className="w-full h-auto max-h-[60vh]"
+        className="w-full h-auto"
         xmlns="http://www.w3.org/2000/svg"
       >
         {/* Connection lines */}
