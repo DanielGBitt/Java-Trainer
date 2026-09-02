@@ -43,3 +43,15 @@ export const CATEGORY_ORDER = [
   "operators",
   "logic",
 ] as const;
+
+export const KNOWLEDGE_TYPE_LABELS: Record<string, string> = {
+  definition: "Definición",
+  rule: "Regla",
+  syntax: "Sintaxis",
+  fact: "Dato",
+  example: "Ejemplo",
+  comparison: "Comparación",
+  procedure: "Procedimiento",
+  application: "Aplicación",
+  common_mistake: "Error común",
+} as const;

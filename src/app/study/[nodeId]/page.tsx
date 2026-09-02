@@ -10,7 +10,7 @@ import { MasteryBar } from "@/components/progress/MasteryBar";
 import { getNodeById, getUnitsForNode } from "@/game/map/builder";
 import { getUnitById } from "@/engine/learning/knowledge";
 import { getAggregateMastery } from "@/engine/mastery/aggregate";
-import { CATEGORY_LABELS } from "@/lib/constants";
+import { CATEGORY_LABELS, KNOWLEDGE_TYPE_LABELS } from "@/lib/constants";
 import { relationships } from "@/data/java/relationships";
 import { buildGameMap } from "@/game/map/builder";
 
@@ -38,7 +38,7 @@ export default function StudyPage() {
 
   if (!node || units.length === 0) {
     return (
-      <div className="max-w-3xl mx-auto p-6 text-center">
+      <div className="max-w-3xl mx-auto p-4 sm:p-6 text-center">
         <h1 className="text-2xl font-bold text-foreground mb-4">
           Nodo no encontrado
         </h1>
@@ -50,7 +50,7 @@ export default function StudyPage() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto p-6 space-y-6">
+    <div className="max-w-3xl mx-auto p-4 sm:p-6 space-y-6">
       <div>
         <Link
           href="/map"
@@ -72,7 +72,7 @@ export default function StudyPage() {
             <CardTitle className="text-lg">Tu Progreso</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
               {(
                 Object.entries(mastery.dimensions) as [
                   string,
@@ -112,7 +112,7 @@ export default function StudyPage() {
               >
                 <div className="flex items-center gap-2 mb-2">
                   <Badge variant="outline" className="text-xs">
-                    {item.type}
+                    {KNOWLEDGE_TYPE_LABELS[item.type] ?? item.type}
                   </Badge>
                 </div>
                 <p className="text-sm text-foreground whitespace-pre-wrap">
@@ -179,7 +179,7 @@ export default function StudyPage() {
         </Card>
       )}
 
-      <div className="flex gap-4">
+      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
         <Link href={`/practice/${nodeId}`} className="flex-1">
           <Button className="w-full" size="lg">
             Practicar

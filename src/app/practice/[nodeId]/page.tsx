@@ -82,7 +82,7 @@ export default function PracticePage() {
 
   if (!node || units.length === 0) {
     return (
-      <div className="max-w-3xl mx-auto p-6 text-center">
+      <div className="max-w-3xl mx-auto p-4 sm:p-6 text-center">
         <h1 className="text-2xl font-bold text-foreground mb-4">
           Nodo no encontrado
         </h1>
@@ -94,8 +94,8 @@ export default function PracticePage() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto p-6 space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="max-w-3xl mx-auto p-4 sm:p-6 space-y-6">
+      <div className="flex items-center justify-between gap-4">
         <div>
           <Link
             href={`/study/${nodeId}`}
@@ -103,7 +103,7 @@ export default function PracticePage() {
           >
             ← Volver a {node.title}
           </Link>
-          <h1 className="text-2xl font-bold text-foreground">
+          <h1 className="text-xl sm:text-2xl font-bold text-foreground">
             Practicar: {node.title}
           </h1>
         </div>
@@ -125,7 +125,7 @@ export default function PracticePage() {
       {mastery && (
         <Card>
           <CardContent className="pt-4">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
               {(
                 Object.entries(mastery.dimensions) as [
                   string,
@@ -173,7 +173,7 @@ export default function PracticePage() {
                 feedback={feedback.message}
                 correctAnswer={feedback.correctAnswer}
               />
-              <div className="flex gap-4">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                 <Button
                   onClick={handleNextExercise}
                   className="flex-1"

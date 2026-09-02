@@ -21,16 +21,16 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`dark ${poppins.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
-        <header className="bg-card border-b border-border px-4 py-3">
-          <nav className="max-w-5xl mx-auto flex items-center gap-6">
-            <Link href="/" className="font-bold text-lg text-foreground">
+        <header className="bg-card border-b border-border px-4 sm:px-6 py-3">
+          <nav className="max-w-5xl mx-auto flex items-center justify-between gap-3">
+            <Link href="/" className="font-bold text-base sm:text-lg text-foreground whitespace-nowrap">
               ☕ Java Trainer
             </Link>
-            <div className="flex gap-4 text-sm">
-              <Link href="/map" className="text-muted-foreground hover:text-foreground">
+            <div className="flex gap-3 sm:gap-4 text-sm">
+              <Link href="/map" className="text-muted-foreground hover:text-foreground whitespace-nowrap">
                 Mapa
               </Link>
-              <Link href="/progress" className="text-muted-foreground hover:text-foreground">
+              <Link href="/progress" className="text-muted-foreground hover:text-foreground whitespace-nowrap">
                 Progreso
               </Link>
             </div>

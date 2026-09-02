@@ -40,18 +40,18 @@ export default function ProgressPage() {
   }, [mastery]);
 
   return (
-    <div className="max-w-5xl mx-auto p-6 space-y-8">
-      <div className="flex items-center justify-between">
+    <div className="max-w-5xl mx-auto p-4 sm:p-6 space-y-8">
+      <div className="flex items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Progreso</h1>
-          <p className="text-gray-500 mt-1">
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Progreso</h1>
+          <p className="text-muted-foreground mt-1 text-sm sm:text-base">
             Tu avance en Java Trainer
           </p>
         </div>
         <PlayerAvatar level={stats.level} xp={stats.xp} />
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
         <StatsCard
           title="Total Unidades"
           value={stats.totalUnits}
@@ -88,27 +88,27 @@ export default function ProgressPage() {
               {masteryByCategory.map((cat) => (
                 <div key={cat.category} className="space-y-1">
                   <div className="flex justify-between text-sm">
-                    <span className="font-medium">
+                    <span className="font-medium text-foreground">
                       {cat.label}
                     </span>
-                    <span className="text-gray-500">
+                    <span className="text-muted-foreground">
                       {cat.count} unidades
                     </span>
                   </div>
-                  <div className="relative h-3 bg-gray-200 rounded-full overflow-hidden">
+                  <div className="relative h-3 bg-muted rounded-full overflow-hidden">
                     <div
-                      className="absolute inset-y-0 left-0 bg-blue-500 transition-all duration-500"
+                      className="absolute inset-y-0 left-0 bg-primary transition-all duration-500"
                       style={{ width: `${cat.average}%` }}
                     />
                   </div>
-                  <p className="text-xs text-gray-500 text-right">
+                  <p className="text-xs text-muted-foreground text-right">
                     {cat.average}% promedio
                   </p>
                 </div>
               ))}
             </div>
           ) : (
-            <p className="text-sm text-gray-500 text-center py-4">
+            <p className="text-sm text-muted-foreground text-center py-4">
               Aún no hay datos de mastery. ¡Empieza a practicar!
             </p>
           )}
@@ -143,20 +143,20 @@ export default function ProgressPage() {
                 .map((attempt) => (
                   <div
                     key={attempt.id}
-                    className="flex items-center gap-3 text-sm p-2 rounded-lg bg-gray-50"
+                    className="flex items-center gap-3 text-sm p-2 rounded-lg bg-muted"
                   >
                     <span>{attempt.correct ? "✅" : "❌"}</span>
-                    <span className="text-gray-600 flex-1">
+                    <span className="text-muted-foreground flex-1">
                       {attempt.knowledgeUnitId.replace("java-", "")}
                     </span>
-                    <span className="text-xs text-gray-400">
+                    <span className="text-xs text-muted-foreground/70">
                       {new Date(attempt.timestamp).toLocaleTimeString()}
                     </span>
                   </div>
                 ))}
             </div>
           ) : (
-            <p className="text-sm text-gray-500 text-center py-4">
+            <p className="text-sm text-muted-foreground text-center py-4">
               No hay actividad reciente.
             </p>
           )}
@@ -171,7 +171,7 @@ export default function ProgressPage() {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="flex gap-4">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
             <Button
               variant="outline"
               onClick={() => {
