@@ -10,9 +10,10 @@ import { MasteryBar } from "@/components/progress/MasteryBar";
 import { getNodeById, getUnitsForNode } from "@/game/map/builder";
 import { getUnitById } from "@/engine/learning/knowledge";
 import { getAggregateMastery } from "@/engine/mastery/aggregate";
-import { CATEGORY_LABELS, KNOWLEDGE_TYPE_LABELS } from "@/lib/constants";
+import { CATEGORY_LABELS } from "@/lib/constants";
 import { relationships } from "@/data/java/relationships";
 import { buildGameMap } from "@/game/map/builder";
+import { KnowledgeItemView } from "@/components/study/KnowledgeItemView";
 
 export default function StudyPage() {
   const params = useParams();
@@ -104,41 +105,9 @@ export default function StudyPage() {
               Dificultad: {unit.difficulty}/3
             </Badge>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-3">
             {unit.knowledge.map((item) => (
-              <div
-                key={item.id}
-                className="p-4 rounded-lg bg-muted/50 border border-border"
-              >
-                <div className="flex items-center gap-2 mb-2">
-                  <Badge variant="outline" className="text-xs">
-                    {KNOWLEDGE_TYPE_LABELS[item.type] ?? item.type}
-                  </Badge>
-                </div>
-                <p className="text-sm text-foreground whitespace-pre-wrap">
-                  {item.content}
-                </p>
-                {item.context && (
-                  <p className="text-xs text-muted-foreground mt-2 italic">
-                    {item.context}
-                  </p>
-                )}
-                {item.correctedContent && (
-                  <div className="mt-3 p-3 bg-amber-950/50 border border-amber-800 rounded">
-                    <p className="text-xs font-medium text-amber-300 mb-1">
-                      Corrección:
-                    </p>
-                    <p className="text-sm text-amber-100">
-                      {item.correctedContent}
-                    </p>
-                    {item.correctionExplanation && (
-                      <p className="text-xs text-amber-300/80 mt-1">
-                        {item.correctionExplanation}
-                      </p>
-                    )}
-                  </div>
-                )}
-              </div>
+              <KnowledgeItemView key={item.id} item={item} />
             ))}
           </CardContent>
         </Card>
