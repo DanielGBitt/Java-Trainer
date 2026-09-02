@@ -16,7 +16,7 @@ export const exercises: Exercise[] = [
       "La información es más pequeña que un dato",
     ],
     correctAnswer: "Un dato es un valor sin contexto, la información es un dato con significado",
-    explanation: "42 es un dato. 'La temperatura es 42°C' es información porque tiene contexto y significado.",
+    explanation: "Dato = 42 sin decir qué es. Información = 'temperatura 42°C' con contexto (qué mide). No confundir: dato necesita significado para ser información.",
   },
   {
     id: "dvsi-recall-1",
@@ -26,7 +26,8 @@ export const exercises: Exercise[] = [
     difficulty: 1,
     question: "¿Qué es información en términos de programación?",
     correctAnswer: "Un dato con significado",
-    explanation: "Información es un dato con contexto que le da significado.",
+    alternativeAnswers: ["dato con contexto", "dato con contexto y significado"],
+    explanation: "Información = dato + contexto que le da significado (ej: 42 → 'temperatura 42°C').",
   },
   {
     id: "dvsi-cc-1",
@@ -37,7 +38,8 @@ export const exercises: Exercise[] = [
     question: "42 es un ___ y 'La temperatura es 42°C' es ___.",
     codeSnippet: "int temperatura = 42; // Esto es información porque tiene ___",
     correctAnswer: "nombre y contexto",
-    explanation: "La variable tiene nombre (temperatura) y contexto (es temperatura), convirtiendo el dato 42 en información.",
+    alternativeAnswers: ["nombre o contexto", "nombre, contexto"],
+    explanation: "temperatura = 42 convierte el dato 42 en información al aportar nombre y contexto (qué mide).",
   },
 
   // ===== java-variable-concepto =====
@@ -55,7 +57,7 @@ export const exercises: Exercise[] = [
       "Entero, decimal y texto",
     ],
     correctAnswer: "Nombre, tipo y valor",
-    explanation: "Una variable tiene: nombre (identificador), tipo (qué guarda) y valor (qué contiene).",
+    explanation: "Variable = caja etiquetada: nombre (cómo la llamas), tipo (qué puede guardar) y valor (qué contiene). No es clase/método/atributo.",
   },
   {
     id: "var-recall-1",
@@ -65,7 +67,12 @@ export const exercises: Exercise[] = [
     difficulty: 1,
     question: "¿Qué es una variable en Java?",
     correctAnswer: "Un espacio en memoria que almacena un valor con un nombre y un tipo",
-    explanation: "Una variable es como una caja etiquetada: nombre = etiqueta, tipo = tamaño, valor = contenido.",
+    alternativeAnswers: [
+      "espacio en memoria con nombre tipo y valor",
+      "caja etiquetada con nombre tipo y valor",
+      "contenedor con nombre tipo y valor",
+    ],
+    explanation: "Caja etiquetada en memoria: nombre (etiqueta), tipo (capacidad) y valor (contenido). Sin tipo no sabrías qué guardar.",
   },
   {
     id: "var-cc-1",
@@ -76,7 +83,8 @@ export const exercises: Exercise[] = [
     question: "Declara una variable int llamada 'edad' con valor 25:",
     codeSnippet: "___ ___ = ___;",
     correctAnswer: "int edad = 25",
-    explanation: "La sintaxis es: tipo nombre valor; → int edad = 25;",
+    alternativeAnswers: ["int edad=25", "int edad =25"],
+    explanation: "Patrón: tipo + nombre + = + valor + ; → int edad = 25; (sin paréntesis ni comillas).",
   },
 
   // ===== java-asignacion =====
@@ -89,7 +97,7 @@ export const exercises: Exercise[] = [
     question: "Si int A = 2; y luego B = A + 1;, ¿cuánto vale B?",
     options: ["2", "3", "1", "Error"],
     correctAnswer: "3",
-    explanation: "Se evalúa A + 1 = 2 + 1 = 3, y el resultado se guarda en B.",
+    explanation: "B = A + 1 → B = 2 + 1 = 3. Se evalúa la expresión primero, luego se asigna. No es 2 (valor viejo de A).",
   },
   {
     id: "asig-recall-1",
@@ -99,7 +107,8 @@ export const exercises: Exercise[] = [
     difficulty: 1,
     question: "¿Qué operador se usa para asignar un valor a una variable?",
     correctAnswer: "=",
-    explanation: "El operador = asigna el valor de la derecha a la variable de la izquierda.",
+    alternativeAnswers: ["igual", "operador igual", "signo igual"],
+    explanation: "= asigna (int x = 5 guarda 5 en x). No es == (comparación).",
   },
   {
     id: "asig-cc-1",
@@ -110,7 +119,8 @@ export const exercises: Exercise[] = [
     question: "Asigna el resultado de 10 + 5 a una variable llamada 'resultado':",
     codeSnippet: "int ___ = ___;",
     correctAnswer: "resultado = 10 + 5",
-    explanation: "Primero se evalúa 10 + 5 = 15, luego se guarda en resultado.",
+    alternativeAnswers: ["resultado=10+5", "resultado =10+5"],
+    explanation: "Se evalúa 10+5=15 y se guarda en resultado. Patrón: nombre = expresión; (el tipo int ya está).",
   },
 
   // ===== java-constantes =====
@@ -123,7 +133,7 @@ export const exercises: Exercise[] = [
     question: "¿Qué palabra clave declara una constante en Java?",
     options: ["const", "final", "static", "constant"],
     correctAnswer: "final",
-    explanation: "En Java se usa 'final' para declarar constantes. 'const' es una palabra reservada pero no se usa así.",
+    explanation: "'final' declara constantes en Java. 'const' existe pero no se usa (error típico). static ≠ constante.",
   },
   {
     id: "const-recall-1",
@@ -133,7 +143,8 @@ export const exercises: Exercise[] = [
     difficulty: 2,
     question: "¿Cómo se escriben las constantes en Java (convención de nombres)?",
     correctAnswer: "SCREAMING_SNAKE_CASE",
-    explanation: "Las constantes se escriben en mayúsculas con guiones bajos: MAX_INTENTOS, VELOCIDAD_LUZ.",
+    alternativeAnswers: ["screaming snake case", "mayusculas con guion bajo", "mayúsculas con guión bajo"],
+    explanation: "Constantes = SCREAMING_SNAKE_CASE (MAX_INTENTOS). Variables usan camelCase — no snake_case ni PascalCase para constantes.",
   },
   {
     id: "const-cc-1",
@@ -144,7 +155,8 @@ export const exercises: Exercise[] = [
     question: "Declara una constante de tipo int con valor 300000 llamada VELOCIDAD_LUZ:",
     codeSnippet: "final int ___ = ___;",
     correctAnswer: "VELOCIDAD_LUZ = 300000",
-    explanation: "final + tipo + NOMBRE_EN_MAYÚSCULAS = valor;",
+    alternativeAnswers: ["VELOCIDAD_LUZ=300000", "velocidad_luz = 300000"],
+    explanation: "Patrón: final int VELOCIDAD_LUZ = 300000; — nombre en MAYÚSCULAS con _, no camelCase ni minúsculas.",
   },
 
   // ===== java-nombres-reglas =====

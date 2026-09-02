@@ -78,19 +78,34 @@ function generateErrorFeedback(
   errorType?: string
 ): string {
   const base = exercise.explanation;
+  const trimmed = userAnswer.trim();
+  const showUserAnswer =
+    trimmed.length > 0 &&
+    trimmed.length < 80 &&
+    exercise.type !== "multiple_choice";
 
+  const prefix = showUserAnswer
+    ? `No era "${trimmed}" — se esperaba "${exercise.correctAnswer}".`
+    : `No era esa — se esperaba "${exercise.correctAnswer}".`;
+
+  let tail = "";
   switch (errorType) {
-    case "forgetting":
-      return `Parece que este concepto necesita refuerzo. ${base}`;
     case "conceptual_confusion":
-      return `Confusión conceptual detectada. ${base}`;
+      tail = " No confundir con el distractor cercano.";
+      break;
     case "syntax_error":
-      return `Error de sintaxis. ${base}`;
+      tail = " Revisa mayúsculas, ; y comillas.";
+      break;
     case "calculation_error":
-      return `Error de cálculo. ${base}`;
+      tail = " Revisa el cálculo paso a paso.";
+      break;
     case "application_error":
-      return `La respuesta no es correcta. ${base}`;
+      tail = " Revisa el caso de uso.";
+      break;
     default:
-      return `Incorrecto. ${base}`;
+      tail = "";
+      break;
   }
+
+  return `${prefix} ${base}${tail}`;
 }

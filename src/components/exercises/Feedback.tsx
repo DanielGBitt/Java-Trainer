@@ -23,12 +23,14 @@ export function Feedback({ correct, feedback, correctAnswer }: FeedbackProps) {
             <Badge variant={correct ? "default" : "destructive"} className="mb-2">
               {correct ? "Correcto" : "Incorrecto"}
             </Badge>
-            <p className="text-sm text-foreground">{feedback}</p>
-            {!correct && correctAnswer && (
-              <p className="text-sm font-medium text-foreground mt-2">
-                Respuesta correcta: {correctAnswer}
-              </p>
-            )}
+            <p className="text-sm leading-relaxed text-foreground whitespace-pre-wrap">{feedback}</p>
+            {!correct &&
+              correctAnswer &&
+              !feedback.includes(correctAnswer) && (
+                <p className="mt-2 inline-block rounded border border-border bg-background/60 px-2 py-1 font-mono text-[13px] text-foreground">
+                  {correctAnswer}
+                </p>
+              )}
           </div>
         </div>
       </CardContent>
