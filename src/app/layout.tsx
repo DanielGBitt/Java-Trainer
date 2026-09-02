@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import Link from "next/link";
+import { CourseNav } from "@/components/layout/CourseNav";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -26,14 +27,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <Link href="/" className="font-bold text-base sm:text-lg text-foreground whitespace-nowrap">
               ☕ Java Trainer
             </Link>
-            <div className="flex gap-3 sm:gap-4 text-sm">
-              <Link href="/map" className="text-muted-foreground hover:text-foreground whitespace-nowrap">
-                Mapa
-              </Link>
-              <Link href="/progress" className="text-muted-foreground hover:text-foreground whitespace-nowrap">
-                Progreso
-              </Link>
-            </div>
+            <CourseNav />
           </nav>
         </header>
         <main className="flex-1">{children}</main>

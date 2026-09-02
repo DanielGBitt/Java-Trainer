@@ -35,7 +35,7 @@ Este documento es la instrucción que la IA debe seguir cada vez que el usuario 
 - Si el curso aún está vacío (0 nodos), el mapa `/c/{curso}/map` muestra Próximamente hasta el primer aporte — no crear placeholder ficticio; descomenta plantilla en `builder.ts`.
 - Actualizar `src/data/{curso}/relationships.ts` con `prerequisite` / `related` hacia units previas del mismo curso.
 - Actualizar `src/lib/constants.ts` si nueva `category`.
-- Actualizar `src/data/courses.ts` `categories` del curso (no `nodeIds` — campo eliminado; señal de vacío es `buildGameMap(courseId).length===0`).
+- Actualizar `src/data/courses.ts` `categories` del curso (no `nodeIds` — campo eliminado; señal de vacío es `buildGameMap(courseId).length===0`). Navbar y dashboard leen `COURSE_ORDER`; nuevo curso aparece auto en `Materias` y `Inicio` sin tocar `layout`.
 
 ### 2.3 Ejercicios (3 por unit, obligatorios) → `src/data/{curso}/exercises.ts`
 
