@@ -18,6 +18,7 @@ export interface Exercise {
   question: string;
   options?: string[];
   correctAnswer: string;
+  alternativeAnswers?: string[];
   explanation: string;
   codeSnippet?: string;
   hints?: string[];

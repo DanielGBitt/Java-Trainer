@@ -39,7 +39,7 @@ export function WorldMap({ nodes, onNodeClick }: WorldMapProps) {
   return (
     <div className="relative w-full overflow-auto">
       <svg
-        viewBox="0 0 800 520"
+        viewBox="0 0 800 580"
         className="w-full h-auto"
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -61,10 +61,10 @@ export function WorldMap({ nodes, onNodeClick }: WorldMapProps) {
         {nodes.map((node) => (
           <foreignObject
             key={node.id}
-            x={node.position.x - 60}
-            y={node.position.y - 30}
-            width={120}
-            height={60}
+            x={node.position.x - 75}
+            y={node.position.y - 45}
+            width={150}
+            height={90}
           >
             <GameNodeComponent node={node} onClick={onNodeClick} />
           </foreignObject>

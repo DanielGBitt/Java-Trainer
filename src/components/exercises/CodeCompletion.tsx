@@ -33,7 +33,7 @@ export function CodeCompletion({ exercise, onAnswer, disabled }: CodeCompletionP
           </div>
         )}
         <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-700">
+          <label className="text-sm font-medium text-foreground">
             Tu respuesta:
           </label>
           <Textarea
@@ -51,8 +51,8 @@ export function CodeCompletion({ exercise, onAnswer, disabled }: CodeCompletionP
           />
         </div>
         {exercise.hints && exercise.hints.length > 0 && (
-          <details className="text-sm text-gray-500">
-            <summary className="cursor-pointer hover:text-gray-700">
+          <details className="text-sm text-muted-foreground">
+            <summary className="cursor-pointer hover:text-foreground">
               Ver pista
             </summary>
             <p className="mt-1 pl-4">{exercise.hints[0]}</p>

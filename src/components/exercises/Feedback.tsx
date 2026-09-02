@@ -13,7 +13,7 @@ export function Feedback({ correct, feedback, correctAnswer }: FeedbackProps) {
   return (
     <Card
       className={`border-2 ${
-        correct ? "border-green-500 bg-green-50" : "border-red-500 bg-red-50"
+        correct ? "border-green-800 bg-green-950/60" : "border-red-800 bg-red-950/60"
       }`}
     >
       <CardContent className="pt-4">
@@ -23,9 +23,9 @@ export function Feedback({ correct, feedback, correctAnswer }: FeedbackProps) {
             <Badge variant={correct ? "default" : "destructive"} className="mb-2">
               {correct ? "Correcto" : "Incorrecto"}
             </Badge>
-            <p className="text-sm text-gray-700">{feedback}</p>
+            <p className="text-sm text-foreground">{feedback}</p>
             {!correct && correctAnswer && (
-              <p className="text-sm font-medium text-gray-900 mt-2">
+              <p className="text-sm font-medium text-foreground mt-2">
                 Respuesta correcta: {correctAnswer}
               </p>
             )}

@@ -33,8 +33,8 @@ export function MultipleChoice({ exercise, onAnswer, disabled }: MultipleChoiceP
             disabled={disabled}
             className={`w-full text-left p-3 rounded-lg border-2 transition-all ${
               selected === option
-                ? "border-blue-500 bg-blue-50"
-                : "border-gray-200 hover:border-gray-300"
+                ? "border-primary bg-primary/20 text-foreground"
+                : "border-border hover:border-ring bg-card text-foreground"
             } ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
           >
             {option}

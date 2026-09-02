@@ -83,7 +83,7 @@ export default function PracticePage() {
   if (!node || units.length === 0) {
     return (
       <div className="max-w-3xl mx-auto p-6 text-center">
-        <h1 className="text-2xl font-bold text-gray-900 mb-4">
+        <h1 className="text-2xl font-bold text-foreground mb-4">
           Nodo no encontrado
         </h1>
         <Link href="/map">
@@ -99,15 +99,15 @@ export default function PracticePage() {
         <div>
           <Link
             href={`/study/${nodeId}`}
-            className="text-sm text-blue-600 hover:text-blue-800 mb-1 inline-block"
+            className="text-sm text-primary hover:text-primary/80 mb-1 inline-block"
           >
             ← Volver a {node.title}
           </Link>
-          <h1 className="text-2xl font-bold text-gray-900">
+          <h1 className="text-2xl font-bold text-foreground">
             Practicar: {node.title}
           </h1>
         </div>
-        <div className="text-right text-sm text-gray-500">
+        <div className="text-right text-sm text-muted-foreground">
           <p>
             {sessionStats.correct}/{sessionStats.total} correctas
           </p>
@@ -197,7 +197,7 @@ export default function PracticePage() {
       ) : (
         <Card>
           <CardContent className="pt-6 text-center">
-            <p className="text-gray-500 mb-4">
+            <p className="text-muted-foreground mb-4">
               No hay ejercicios disponibles para esta unidad.
             </p>
             <Link href="/map">

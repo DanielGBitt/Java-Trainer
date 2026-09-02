@@ -18,8 +18,8 @@ export default function DashboardPage() {
     <div className="max-w-5xl mx-auto p-6 space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Java Trainer</h1>
-          <p className="text-gray-500 mt-1">
+          <h1 className="text-3xl font-bold text-foreground">Java Trainer</h1>
+          <p className="text-muted-foreground mt-1">
             Tu motor de aprendizaje activo para Java
           </p>
         </div>
@@ -61,7 +61,7 @@ export default function DashboardPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-gray-500 mb-4">
+            <p className="text-sm text-muted-foreground mb-4">
               Explora los conceptos de Java y desbloquea nuevos nodos.
             </p>
             <Link href="/map">
@@ -79,7 +79,7 @@ export default function DashboardPage() {
           <CardContent>
             {reviewUnits.length > 0 ? (
               <>
-                <p className="text-sm text-gray-500 mb-4">
+                <p className="text-sm text-muted-foreground mb-4">
                   Tienes {reviewUnits.length} unidad(es) pendientes de revisión.
                 </p>
                 <Link href={`/practice/${reviewUnits[0].id}`}>
@@ -90,7 +90,7 @@ export default function DashboardPage() {
               </>
             ) : (
               <>
-                <p className="text-sm text-gray-500 mb-4">
+                <p className="text-sm text-muted-foreground mb-4">
                   No hay revisiones pendientes. ¡Sigue aprendiendo!
                 </p>
                 <Link href="/map">
@@ -119,20 +119,20 @@ export default function DashboardPage() {
                 .map((attempt) => (
                   <div
                     key={attempt.id}
-                    className="flex items-center gap-3 text-sm p-2 rounded-lg bg-gray-50"
+                    className="flex items-center gap-3 text-sm p-2 rounded-lg bg-muted"
                   >
                     <span>{attempt.correct ? "✅" : "❌"}</span>
-                    <span className="text-gray-600">
+                    <span className="text-muted-foreground">
                       {attempt.knowledgeUnitId.replace("java-", "")}
                     </span>
-                    <span className="text-gray-400 ml-auto">
+                    <span className="text-muted-foreground/70 ml-auto">
                       {new Date(attempt.timestamp).toLocaleTimeString()}
                     </span>
                   </div>
                 ))}
             </div>
           ) : (
-            <p className="text-sm text-gray-500 text-center py-4">
+            <p className="text-sm text-muted-foreground text-center py-4">
               Aún no has realizado ningún ejercicio. ¡Empieza en el mapa!
             </p>
           )}
