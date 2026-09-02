@@ -1,11 +1,18 @@
-import { allKnowledgeUnits } from "@/data/java/knowledgeUnits";
-import { relationships } from "@/data/java/relationships";
+import { introProgramacionUnits } from "@/data/intro-programacion/knowledge";
+import { logicaProgramacionUnits } from "@/data/logica-programacion/knowledge";
 import { basesDeDatosUnits } from "@/data/bases-de-datos/knowledge";
+import { introProgramacionRelationships } from "@/data/intro-programacion/relationships";
+import { logicaProgramacionRelationships } from "@/data/logica-programacion/relationships";
 import { basesDeDatosRelationships } from "@/data/bases-de-datos/relationships";
 import type { KnowledgeUnit, Relationship } from "@/types/knowledge";
 
-const allUnits: KnowledgeUnit[] = [...allKnowledgeUnits, ...basesDeDatosUnits];
-const allRelationships: Relationship[] = [...relationships, ...basesDeDatosRelationships];
+// Solo lógica tiene contenido por ahora; intro y BD vacíos (Próximamente).
+const allUnits: KnowledgeUnit[] = [...introProgramacionUnits, ...logicaProgramacionUnits, ...basesDeDatosUnits];
+const allRelationships: Relationship[] = [
+  ...introProgramacionRelationships,
+  ...logicaProgramacionRelationships,
+  ...basesDeDatosRelationships,
+];
 
 export function getAllUnits(): KnowledgeUnit[] {
   return allUnits;
@@ -20,21 +27,15 @@ export function getUnitsByCategory(category: string): KnowledgeUnit[] {
 }
 
 export function getRelatedUnits(unitId: string): Relationship[] {
-  return allRelationships.filter(
-    (r) => r.sourceId === unitId || r.targetId === unitId
-  );
+  return allRelationships.filter((r) => r.sourceId === unitId || r.targetId === unitId);
 }
 
 export function getPrerequisites(unitId: string): string[] {
-  return allRelationships
-    .filter((r) => r.targetId === unitId && r.type === "prerequisite")
-    .map((r) => r.sourceId);
+  return allRelationships.filter((r) => r.targetId === unitId && r.type === "prerequisite").map((r) => r.sourceId);
 }
 
 export function getDependents(unitId: string): string[] {
-  return allRelationships
-    .filter((r) => r.sourceId === unitId && r.type === "prerequisite")
-    .map((r) => r.targetId);
+  return allRelationships.filter((r) => r.sourceId === unitId && r.type === "prerequisite").map((r) => r.targetId);
 }
 
 export function getAllCategories(): string[] {

@@ -25,7 +25,7 @@ Este documento es la instrucción que la IA debe seguir cada vez que el usuario 
 
 ### 2.2 Registrar
 
-- Añadir unit en `src/data/{intro,logica,bd}/knowledge.ts` (crear carpeta si no existe). Re-export shim `src/data/java/*` solo como alias para historial `localStorage`.
+- Añadir unit en `src/data/{intro,logica,bd}/knowledge.ts` (crear carpeta si no existe). Re-export shim `src/data/java/*` solo como alias para historial `localStorage`. Si el curso aún está vacío (0 nodos), el mapa mostrará Próximamente hasta el primer aporte — no crear placeholder ficticio; descomenta plantilla en `builder.ts`.
 - Actualizar `src/data/{curso}/relationships.ts` con `prerequisite` / `related` hacia units previas del mismo curso.
 - Actualizar `src/lib/constants.ts` si nueva `category`.
 - Actualizar `src/data/courses.ts` `nodeIds` / `categories` del curso.

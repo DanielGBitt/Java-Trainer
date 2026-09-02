@@ -1,19 +1,22 @@
-import { exercises } from "@/data/java/exercises";
+import { introProgramacionExercises } from "@/data/intro-programacion/exercises";
+import { logicaProgramacionExercises } from "@/data/logica-programacion/exercises";
 import { basesDeDatosExercises } from "@/data/bases-de-datos/exercises";
 import { getAllMastery } from "../mastery/index";
 import { storage } from "@/storage";
 import type { Exercise, MasteryDimension } from "@/types/exercise";
 
-const allExercises: Exercise[] = [...exercises, ...basesDeDatosExercises];
+const allExercises: Exercise[] = [
+  ...introProgramacionExercises,
+  ...logicaProgramacionExercises,
+  ...basesDeDatosExercises,
+];
 
 export interface SelectionContext {
   unitIds?: string[];
   preferredDimension?: MasteryDimension;
 }
 
-export function selectNextExercise(
-  context: SelectionContext = {}
-): Exercise | null {
+export function selectNextExercise(context: SelectionContext = {}): Exercise | null {
   const mastery = getAllMastery();
   const progress = storage.getProgress();
   const attempts = progress?.attempts ?? [];
@@ -22,9 +25,7 @@ export function selectNextExercise(
 
   // Filter by units if specified
   if (context.unitIds && context.unitIds.length > 0) {
-    candidates = candidates.filter((e) =>
-      context.unitIds!.includes(e.knowledgeUnitId)
-    );
+    candidates = candidates.filter((e) => context.unitIds!.includes(e.knowledgeUnitId));
   }
 
   if (candidates.length === 0) return null;
@@ -53,9 +54,7 @@ export function selectNextExercise(
     }
 
     // Priority 3: Avoid recently attempted exercises
-    const recentAttempt = attempts.find(
-      (a) => a.exerciseId === exercise.id
-    );
+    const recentAttempt = attempts.find((a) => a.exerciseId === exercise.id);
     if (recentAttempt) {
       const hoursSince = (Date.now() - recentAttempt.timestamp) / (1000 * 60 * 60);
       if (hoursSince < 1) {

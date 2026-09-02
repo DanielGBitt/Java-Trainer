@@ -2,7 +2,7 @@
 
 import { useMemo, useState, useCallback, useRef } from "react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { MultipleChoice } from "@/components/exercises/MultipleChoice";
@@ -12,7 +12,7 @@ import { Feedback } from "@/components/exercises/Feedback";
 import { MasteryBar } from "@/components/progress/MasteryBar";
 import { selectNextExercise } from "@/engine/adaptive/selector";
 import { submitAnswer } from "@/engine/evaluation/index";
-import { getNodeById, getUnitsForNode } from "@/game/map/builder";
+import { getNodeById, getUnitsForNode, getCourseIdForNode } from "@/game/map/builder";
 import { getAggregateMastery } from "@/engine/mastery/aggregate";
 import type { Exercise } from "@/types/exercise";
 import type { Attempt } from "@/types/attempt";
@@ -21,54 +21,29 @@ export default function PracticePage() {
   const params = useParams();
   const nodeId = params.nodeId as string;
 
+  const courseId = getCourseIdForNode(nodeId);
+  if (courseId) redirect(`/c/${courseId}/practice/${nodeId}`);
+  if (!courseId) redirect("/c/logica-programacion/map");
+
   const node = useMemo(() => getNodeById(nodeId), [nodeId]);
   const units = useMemo(() => getUnitsForNode(nodeId), [nodeId]);
   const unitIds = useMemo(() => units.map((u) => u.id), [units]);
   const mastery = useMemo(() => getAggregateMastery(unitIds), [unitIds]);
 
-  const [currentExercise, setCurrentExercise] = useState<Exercise | null>(
-    () => selectNextExercise({ unitIds })
-  );
-  const [feedback, setFeedback] = useState<{
-    correct: boolean;
-    message: string;
-    correctAnswer?: string;
-  } | null>(null);
+  const [currentExercise, setCurrentExercise] = useState<Exercise | null>(() => selectNextExercise({ unitIds }));
+  const [feedback, setFeedback] = useState<{ correct: boolean; message: string; correctAnswer?: string } | null>(null);
   const [attemptHistory, setAttemptHistory] = useState<Attempt[]>([]);
   const startTimeRef = useRef<number | null>(null);
-  const [sessionStats, setSessionStats] = useState({
-    correct: 0,
-    total: 0,
-  });
+  const [sessionStats, setSessionStats] = useState({ correct: 0, total: 0 });
 
   const handleAnswer = useCallback(
     (answer: string) => {
       if (!currentExercise) return;
-
-      if (startTimeRef.current === null) {
-        startTimeRef.current = Date.now();
-      }
-
-      const result = submitAnswer(
-        currentExercise,
-        answer,
-        startTimeRef.current,
-        attemptHistory
-      );
-
-      setFeedback({
-        correct: result.correct,
-        message: result.feedback,
-        correctAnswer: result.correct
-          ? undefined
-          : currentExercise.correctAnswer,
-      });
-
+      if (startTimeRef.current === null) startTimeRef.current = Date.now();
+      const result = submitAnswer(currentExercise, answer, startTimeRef.current, attemptHistory);
+      setFeedback({ correct: result.correct, message: result.feedback, correctAnswer: result.correct ? undefined : currentExercise.correctAnswer });
       setAttemptHistory((prev) => [...prev, result.attempt]);
-      setSessionStats((prev) => ({
-        correct: prev.correct + (result.correct ? 1 : 0),
-        total: prev.total + 1,
-      }));
+      setSessionStats((prev) => ({ correct: prev.correct + (result.correct ? 1 : 0), total: prev.total + 1 }));
     },
     [currentExercise, attemptHistory]
   );
@@ -83,11 +58,9 @@ export default function PracticePage() {
   if (!node || units.length === 0) {
     return (
       <div className="max-w-3xl mx-auto p-4 sm:p-6 text-center">
-        <h1 className="text-2xl font-bold text-foreground mb-4">
-          Nodo no encontrado
-        </h1>
-        <Link href="/map">
-          <Button>Volver al Mapa</Button>
+        <h1 className="text-2xl font-bold text-foreground mb-4">Nodo no encontrado</h1>
+        <Link href="/c/logica-programacion/map">
+          <Button>Volver a Lógica</Button>
         </Link>
       </div>
     );
@@ -97,28 +70,16 @@ export default function PracticePage() {
     <div className="max-w-3xl mx-auto p-4 sm:p-6 space-y-6">
       <div className="flex items-center justify-between gap-4">
         <div>
-          <Link
-            href={`/study/${nodeId}`}
-            className="text-sm text-primary hover:text-primary/80 mb-1 inline-block"
-          >
+          <Link href={`/study/${nodeId}`} className="text-sm text-primary hover:text-primary/80 mb-1 inline-block">
             ← Volver a {node.title}
           </Link>
-          <h1 className="text-xl sm:text-2xl font-bold text-foreground">
-            Practicar: {node.title}
-          </h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-foreground">Practicar: {node.title}</h1>
         </div>
         <div className="text-right text-sm text-muted-foreground">
           <p>
             {sessionStats.correct}/{sessionStats.total} correctas
           </p>
-          {sessionStats.total > 0 && (
-            <p>
-              {Math.round(
-                (sessionStats.correct / sessionStats.total) * 100
-              )}
-              % precisión
-            </p>
-          )}
+          {sessionStats.total > 0 && <p>{Math.round((sessionStats.correct / sessionStats.total) * 100)}% precisión</p>}
         </div>
       </div>
 
@@ -126,17 +87,8 @@ export default function PracticePage() {
         <Card>
           <CardContent className="pt-4">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-              {(
-                Object.entries(mastery.dimensions) as [
-                  string,
-                  { level: number }
-                ][]
-              ).map(([dim, d]) => (
-                <MasteryBar
-                  key={dim}
-                  dimension={dim as "understanding" | "recall" | "syntax" | "application"}
-                  level={d.level}
-                />
+              {(Object.entries(mastery.dimensions) as [string, { level: number }][]).map(([dim, d]) => (
+                <MasteryBar key={dim} dimension={dim as "understanding" | "recall" | "syntax" | "application"} level={d.level} />
               ))}
             </div>
           </CardContent>
@@ -147,46 +99,19 @@ export default function PracticePage() {
         <div className="space-y-4">
           {!feedback ? (
             <>
-              {currentExercise.type === "multiple_choice" && (
-                <MultipleChoice
-                  exercise={currentExercise}
-                  onAnswer={handleAnswer}
-                />
-              )}
-              {currentExercise.type === "recall" && (
-                <RecallQuestion
-                  exercise={currentExercise}
-                  onAnswer={handleAnswer}
-                />
-              )}
-              {currentExercise.type === "code_completion" && (
-                <CodeCompletion
-                  exercise={currentExercise}
-                  onAnswer={handleAnswer}
-                />
-              )}
+              {currentExercise.type === "multiple_choice" && <MultipleChoice exercise={currentExercise} onAnswer={handleAnswer} />}
+              {currentExercise.type === "recall" && <RecallQuestion exercise={currentExercise} onAnswer={handleAnswer} />}
+              {currentExercise.type === "code_completion" && <CodeCompletion exercise={currentExercise} onAnswer={handleAnswer} />}
             </>
           ) : (
             <>
-              <Feedback
-                correct={feedback.correct}
-                feedback={feedback.message}
-                correctAnswer={feedback.correctAnswer}
-              />
+              <Feedback correct={feedback.correct} feedback={feedback.message} correctAnswer={feedback.correctAnswer} />
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                <Button
-                  onClick={handleNextExercise}
-                  className="flex-1"
-                  size="lg"
-                >
+                <Button onClick={handleNextExercise} className="flex-1" size="lg">
                   Siguiente Ejercicio
                 </Button>
-                <Link href="/map" className="flex-1">
-                  <Button
-                    className="w-full"
-                    size="lg"
-                    variant="outline"
-                  >
+                <Link href="/c/logica-programacion/map" className="flex-1">
+                  <Button className="w-full" size="lg" variant="outline">
                     Volver al Mapa
                   </Button>
                 </Link>
@@ -197,10 +122,8 @@ export default function PracticePage() {
       ) : (
         <Card>
           <CardContent className="pt-6 text-center">
-            <p className="text-muted-foreground mb-4">
-              No hay ejercicios disponibles para esta unidad.
-            </p>
-            <Link href="/map">
+            <p className="text-muted-foreground mb-4">No hay ejercicios disponibles para esta unidad.</p>
+            <Link href="/c/logica-programacion/map">
               <Button>Volver al Mapa</Button>
             </Link>
           </CardContent>

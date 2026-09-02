@@ -1,12 +1,14 @@
-import type { Course } from "@/types/course";
+import type { Course, CourseId } from "@/types/course";
+
+export const COURSE_ORDER: CourseId[] = ["intro-programacion", "logica-programacion", "bases-de-datos"];
 
 export const COURSES: Course[] = [
   {
     id: "intro-programacion",
     title: "Introducción a la Programación",
-    description: "Datos, variables, asignación, constantes, nombres y tipos primitivos.",
+    description: "Próximamente — envía tus apuntes para generar el primer tema.",
     icon: "📦",
-    categories: ["fundamentals", "conventions", "typing", "primitives"],
+    categories: [],
   },
   {
     id: "logica-programacion",
@@ -18,9 +20,9 @@ export const COURSES: Course[] = [
   {
     id: "bases-de-datos",
     title: "Bases de Datos",
-    description: "Modelado y SQL (placeholder hasta primer aporte).",
+    description: "Próximamente — envía tus apuntes para generar el primer tema.",
     icon: "🗄️",
-    categories: ["bd-modelado", "bd-sql"],
+    categories: [],
   },
 ];
 
