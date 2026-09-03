@@ -1,13 +1,15 @@
 "use client";
 
+import { XP_PER_LEVEL } from "@/lib/constants";
+
 interface PlayerAvatarProps {
   level: number;
   xp: number;
 }
 
 export function PlayerAvatar({ level, xp }: PlayerAvatarProps) {
-  const xpForNextLevel = level * 100;
-  const progress = Math.min((xp % 100), 100);
+  const xpForNextLevel = level * XP_PER_LEVEL;
+  const progress = Math.min(xp % XP_PER_LEVEL, XP_PER_LEVEL);
 
   return (
     <div className="flex items-center gap-3 p-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl text-white">

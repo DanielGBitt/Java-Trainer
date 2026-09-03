@@ -42,7 +42,7 @@ export function checkNodeStatus(
   if (ratio >= 1) {
     return "available";
   } else if (ratio >= 0.5) {
-    return "available"; // Partially unlocked with warning
+    return "available"; // MVP permisivo: basta 50% prereqs para no bloquear intro (intencional)
   }
 
   return "locked";

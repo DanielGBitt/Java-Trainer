@@ -8,7 +8,7 @@ export class FSRSAdapter implements SchedulerAdapter {
   constructor() {
     this.scheduler = fsrs({
       request_retention: 0.9,
-      maximum_interval: 36500,
+      maximum_interval: 36500, // FSRS max 36500d ≈100a (lib default); UI cap 365d en MAX_REVIEW_INTERVAL_DAYS
     });
   }
 
