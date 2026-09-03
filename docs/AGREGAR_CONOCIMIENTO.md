@@ -9,6 +9,17 @@ Este documento es la instrucción que la IA debe seguir cada vez que el usuario 
 - Bloque bruto: apuntes, foto, pdf, resumen, o prompt libre
 - (Opcional) Conceptos a cubrir si quieres limitar alcance (1–3)
 
+## 1.5 Metodología — cómo trocear para memorizar (leer antes de 2.1)
+
+- **Objetivo mastery:** llevar 4 dimensiones `understanding|recall|syntax|application` (`src/lib/constants.ts:13` `MASTERY_DIMENSIONS`) a `≥80` (`UMBRALES_MASTERY.STRONG`).
+- **FSRS 0.9:** `src/engine/scheduling/fsrs-adapter.ts:9` `request_retention:0.9`, `src/engine/evaluation/grader.ts:4` `normalizeAnswer` NFD + `src/engine/mastery/dimensions.ts:41` `+20/15/10` si `rating 3/2/1` y `-25` si `errorStreak≥2`. `recall` con `correctAnswer` largo sin `alternativeAnswers` → `rating 0 Again` aunque el concepto esté bien.
+- **Mapeo `KnowledgeItem → Exercise` 1:1 (3 por unit):**
+  - `definition` → `multiple_choice` `dimension: understanding` (distractor cercano, ej `l33t` vs `camelCase`)
+  - `rule` → `recall` `dimension: recall` (`correctAnswer ≤4 palabras` + `alternativeAnswers`)
+  - `example|syntax` → `code_completion` `dimension: syntax|application` (`codeSnippet` mono `font-mono bg-zinc-900/60`)
+  - `comparison|common_mistake` → distractor de `mc` o `application`.
+- **Dificultad:** `1` si `overallLevel<30` (nuevo), `2` si 30-70, `3` si >70 (`src/engine/adaptive/selector.ts:77`). Nuevo concepto siempre `1`, regla con trampa `2`.
+
 ## 2. Checklist obligatorio para la IA (no omitir pasos)
 
 ### 2.1 Normalizar conocimiento → `KnowledgeUnit`
@@ -47,7 +58,7 @@ Este documento es la instrucción que la IA debe seguir cada vez que el usuario 
 
 ### 2.4 Mapa y posicionamiento
 
-- `src/game/map/builder.ts` `buildGameMap(courseId)` filtra por curso. Cada curso tiene su propia grilla `x 150/400/650 y 60-440`. **Hoy solo Lógica tiene nodos activos** `node-operators (400,160)` → `node-logic (400,320)`; Intro y BD son `/* PLANTILLA ... */` comentadas que se descomentan al recibir primer aporte de ese curso. No tocar posiciones de otro curso.
+- `src/game/map/builder.ts` `buildGameMap(courseId)` filtra por curso. Cada curso tiene su propia grilla `x 150/400/650 y 60-440`. **Hoy Lógica tiene 3 nodos** `node-datos (400,60)` Lote1 Moy → `node-operators (400,160)` → `node-logic (400,320)`; Intro y BD son `/* PLANTILLA ... */` comentadas que se descomentan al recibir primer aporte de ese curso. No tocar posiciones de otro curso.
 - Verificar `ViewBox 0 0 800 580` + `foreignObject 150x90 x-75 y-45` (no recorta `GameNode`).
 - Añadir conexión en `NODE_CONNECTIONS` plantilla correspondiente si la unit tiene prerequisite (descomenta línea de plantilla).
 
@@ -57,7 +68,7 @@ Este documento es la instrucción que la IA debe seguir cada vez que el usuario 
 npm run lint
 npm run build # debe dar 8/8 rutas (/, /map redirect, /c/[courseId]/map|study|practice, /practice|study/[nodeId], /progress)
 # smoke manual:
-# /c/logica-programacion/map → 2 nodos sin recorte
+# /c/logica-programacion/map → 3 nodos sin recorte (Datos → Operadores → Lógica)
 # /c/intro-programacion/map y /c/bases-de-datos/map → Próximamente (vacío, sin WorldMap)
 # /c/{curso}/study/{nodeId} muestra Definición/Regla/Ejemplo con rail+icono+mono
 # /c/{curso}/practice/{nodeId} incorrecto muestra "No era X — se esperaba Y." solo en recall/cc (<80 chars)

@@ -14,6 +14,7 @@ interface NodeDefinition {
 }
 
 const NODE_DEFINITIONS: NodeDefinition[] = [
+  { id: "node-datos", title: "Datos", icon: "📦", category: "fundamentals", courseId: "logica-programacion", unitIds: ["logica-informacion", "logica-variable", "logica-constante"], x: 400, y: 60 },
   { id: "node-operators", title: "Operadores", icon: "➗", category: "operators", courseId: "logica-programacion", unitIds: ["java-op-aritmeticos", "java-op-comparacion", "java-modulo"], x: 400, y: 160 },
   { id: "node-logic", title: "Lógica", icon: "🧠", category: "logic", courseId: "logica-programacion", unitIds: ["java-not", "java-and", "java-or"], x: 400, y: 320 },
   /* PLANTILLA INTRO — descomentar al recibir apuntes (grilla x150/400/650 y60-340, ViewBox 800x580)
@@ -29,6 +30,7 @@ const NODE_DEFINITIONS: NodeDefinition[] = [
 ];
 
 const NODE_CONNECTIONS: [string, string][] = [
+  ["node-datos", "node-operators"],
   ["node-operators", "node-logic"],
   /* PLANTILLA INTRO: ["node-fundamentals", "node-conventions"], ["node-fundamentals", "node-primitives"], ["node-primitives", "node-typing"], ["node-primitives", "node-operators"], */
   /* PLANTILLA BD: ["node-bd-modelado", "node-bd-sql"], */

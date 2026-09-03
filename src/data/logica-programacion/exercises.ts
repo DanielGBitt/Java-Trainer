@@ -3,6 +3,113 @@ import { exercises as javaExercises } from "@/data/java/exercises";
 
 const LOGICA_UNIT_PREFIXES = ["java-op-", "java-not", "java-and", "java-or", "java-modulo"];
 
-export const logicaProgramacionExercises: Exercise[] = javaExercises.filter((e) =>
-  LOGICA_UNIT_PREFIXES.some((p) => e.knowledgeUnitId.startsWith(p))
-);
+const moyLote1Exercises: Exercise[] = [
+  // logica-informacion (definition → mc/understanding, rule → recall/recall, example → cc/application)
+  {
+    id: "logica-informacion-mc",
+    knowledgeUnitId: "logica-informacion",
+    type: "multiple_choice",
+    dimension: "understanding",
+    difficulty: 1,
+    question: "¿Qué convierte 42 en información?",
+    options: ["42 sin decir qué es", "temperatura 42°C con contexto", "42.0 con decimal", "P44SW0RD"],
+    correctAnswer: "temperatura 42°C con contexto",
+    explanation: "Info = dato + contexto (qué mide y unidad). 42 solo es dato.",
+  },
+  {
+    id: "logica-informacion-recall",
+    knowledgeUnitId: "logica-informacion",
+    type: "recall",
+    dimension: "recall",
+    difficulty: 1,
+    question: "Dato + contexto y significado = ?",
+    correctAnswer: "información",
+    alternativeAnswers: ["informacion"],
+    explanation: "Dato sin contexto no es info; con contexto sí.",
+  },
+  {
+    id: "logica-informacion-cc",
+    knowledgeUnitId: "logica-informacion",
+    type: "code_completion",
+    dimension: "application",
+    difficulty: 1,
+    question: "42 es dato, \"temperatura 42°C\" es info porque aporta:",
+    codeSnippet: 'int temperatura = 42; // info: dato + ___ y unidad',
+    correctAnswer: "contexto",
+    alternativeAnswers: ["contexto y significado", "significado"],
+    explanation: "Contexto (qué mide) convierte dato en información.",
+  },
+  // logica-variable
+  {
+    id: "logica-variable-mc",
+    knowledgeUnitId: "logica-variable",
+    type: "multiple_choice",
+    dimension: "understanding",
+    difficulty: 1,
+    question: "¿Qué es una variable?",
+    options: ["Valor fijo que no cambia", "Contenedor con nombre, tipo y valor que puede cambiar", "Palabra reservada", "Un estilo l33t"],
+    correctAnswer: "Contenedor con nombre, tipo y valor que puede cambiar",
+    explanation: "Variable = caja etiquetada: tipo + nombre + valor reasignable.",
+  },
+  {
+    id: "logica-variable-recall",
+    knowledgeUnitId: "logica-variable",
+    type: "recall",
+    dimension: "recall",
+    difficulty: 1,
+    question: "Variable = contenedor con nombre, tipo y ___",
+    correctAnswer: "valor",
+    explanation: "Nombre, tipo y valor son los 3 componentes.",
+  },
+  {
+    id: "logica-variable-cc",
+    knowledgeUnitId: "logica-variable",
+    type: "code_completion",
+    dimension: "syntax",
+    difficulty: 1,
+    question: "Declara String localidad con valor Madrid:",
+    codeSnippet: '___ ___ = "Madrid";',
+    correctAnswer: 'String localidad = "Madrid"',
+    alternativeAnswers: ['String localidad="Madrid"', "String localidad = 'Madrid'"],
+    explanation: "Patrón: tipo + nombre = valor; con String y comillas.",
+  },
+  // logica-constante
+  {
+    id: "logica-constante-mc",
+    knowledgeUnitId: "logica-constante",
+    type: "multiple_choice",
+    dimension: "understanding",
+    difficulty: 1,
+    question: "¿Qué define a una constante?",
+    options: ["Valor que puede cambiar", "Valor fijo que no cambia en la ejecución", "Variable sin tipo", "Un operador %"],
+    correctAnswer: "Valor fijo que no cambia en la ejecución",
+    explanation: "Constante no se reasigna; variable sí.",
+  },
+  {
+    id: "logica-constante-recall",
+    knowledgeUnitId: "logica-constante",
+    type: "recall",
+    dimension: "recall",
+    difficulty: 1,
+    question: "En Java, ¿qué palabra clave declara constante y qué estilo usa su nombre?",
+    correctAnswer: "final SCREAMING_SNAKE_CASE",
+    alternativeAnswers: ["final screaming snake case", "final mayusculas con guion bajo"],
+    explanation: "final + SCREAMING_SNAKE_CASE, ej VELOCIDAD_LUZ.",
+  },
+  {
+    id: "logica-constante-cc",
+    knowledgeUnitId: "logica-constante",
+    type: "code_completion",
+    dimension: "syntax",
+    difficulty: 1,
+    question: "Declara constante velocidad de la luz 300000:",
+    codeSnippet: "___ int VELOCIDAD_LUZ = 300000;",
+    correctAnswer: "final",
+    explanation: "final int VELOCIDAD_LUZ = 300000; no se reasigna.",
+  },
+];
+
+export const logicaProgramacionExercises: Exercise[] = [
+  ...moyLote1Exercises,
+  ...javaExercises.filter((e) => LOGICA_UNIT_PREFIXES.some((p) => e.knowledgeUnitId.startsWith(p))),
+];

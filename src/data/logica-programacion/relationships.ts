@@ -10,6 +10,13 @@ const LOGICA_UNIT_IDS = new Set([
   "java-or",
 ]);
 
-export const logicaProgramacionRelationships: Relationship[] = javaRelationships.filter(
-  (r) => LOGICA_UNIT_IDS.has(r.sourceId) && LOGICA_UNIT_IDS.has(r.targetId)
-);
+const moyLote1Relationships: Relationship[] = [
+  { sourceId: "logica-informacion", targetId: "logica-variable", type: "prerequisite", strength: 1 },
+  { sourceId: "logica-variable", targetId: "logica-constante", type: "prerequisite", strength: 1 },
+  { sourceId: "logica-constante", targetId: "java-op-aritmeticos", type: "prerequisite", strength: 0.8 },
+];
+
+export const logicaProgramacionRelationships: Relationship[] = [
+  ...moyLote1Relationships,
+  ...javaRelationships.filter((r) => LOGICA_UNIT_IDS.has(r.sourceId) && LOGICA_UNIT_IDS.has(r.targetId)),
+];
