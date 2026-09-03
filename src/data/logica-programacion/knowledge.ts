@@ -42,4 +42,34 @@ export const moyLote1Units: KnowledgeUnit[] = [
   },
 ];
 
-export const logicaProgramacionUnits = [...moyLote1Units, ...operatorsUnits, ...logicUnits];
+// Lote 2 — Moy §2 Reglas y Estilos
+export const moyLote2Units: KnowledgeUnit[] = [
+  {
+    id: "logica-nomenclatura-reglas",
+    title: "Reglas de Nomenclatura",
+    category: "conventions",
+    difficulty: 1,
+    tags: ["logica", "nomenclatura", "reglas", "identificador"],
+    knowledge: [
+      { id: "logica-nomenclatura-reglas-def", type: "definition", content: "Identificador = nombre sin espacio formado por letras, números, _ y $." },
+      { id: "logica-nomenclatura-reglas-rule", type: "rule", content: "No inicia con número y no puede ser palabra reservada if/while/for." },
+      { id: "logica-nomenclatura-reglas-ex", type: "example", content: "Válido: _contador, $precio. Inválido: 2doNombre, mi edad." },
+      { id: "logica-nomenclatura-reglas-mistake", type: "common_mistake", content: "if como variable es ERROR: if = 5 compila mal; usa condicion." },
+    ],
+  },
+  {
+    id: "logica-convenciones-estilos",
+    title: "Estilos de Escritura",
+    category: "conventions",
+    difficulty: 1,
+    tags: ["logica", "camelCase", "snake_case", "SCREAMING_SNAKE_CASE", "kebab", "l33t", "hungara"],
+    knowledge: [
+      { id: "logica-convenciones-estilos-def", type: "definition", content: "Estilo = convención de mayúsculas y separadores para nombres." },
+      { id: "logica-convenciones-estilos-rule", type: "rule", content: "Java: camelCase vars/métodos, SCREAMING_SNAKE_CASE const; kebab/l33t NO Java; strNombre húngara legacy." },
+      { id: "logica-convenciones-estilos-ex", type: "example", content: "fechaDeNacimiento (camelCase) vs FECHA_DE_NACIMIENTO (SCREAMING) vs P44SW0RD/fecha-de-nacimiento no Java." },
+      { id: "logica-convenciones-estilos-comp", type: "comparison", content: "camelCase:fechaDeNacimiento vs snake_case:fecha_de_nacimiento vs SCREAMING:FECHA_DE_NACIMIENTO vs kebab:fecha-de-nacimiento" },
+    ],
+  },
+];
+
+export const logicaProgramacionUnits = [...moyLote1Units, ...moyLote2Units, ...operatorsUnits, ...logicUnits];

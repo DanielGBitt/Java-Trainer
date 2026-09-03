@@ -13,10 +13,16 @@ const LOGICA_UNIT_IDS = new Set([
 const moyLote1Relationships: Relationship[] = [
   { sourceId: "logica-informacion", targetId: "logica-variable", type: "prerequisite", strength: 1 },
   { sourceId: "logica-variable", targetId: "logica-constante", type: "prerequisite", strength: 1 },
-  { sourceId: "logica-constante", targetId: "java-op-aritmeticos", type: "prerequisite", strength: 0.8 },
+  { sourceId: "logica-constante", targetId: "logica-nomenclatura-reglas", type: "prerequisite", strength: 0.8 },
+];
+
+const moyLote2Relationships: Relationship[] = [
+  { sourceId: "logica-nomenclatura-reglas", targetId: "logica-convenciones-estilos", type: "prerequisite", strength: 1 },
+  { sourceId: "logica-convenciones-estilos", targetId: "java-op-aritmeticos", type: "prerequisite", strength: 0.8 },
 ];
 
 export const logicaProgramacionRelationships: Relationship[] = [
   ...moyLote1Relationships,
+  ...moyLote2Relationships,
   ...javaRelationships.filter((r) => LOGICA_UNIT_IDS.has(r.sourceId) && LOGICA_UNIT_IDS.has(r.targetId)),
 ];

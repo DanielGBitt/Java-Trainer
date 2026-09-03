@@ -109,7 +109,81 @@ const moyLote1Exercises: Exercise[] = [
   },
 ];
 
+const moyLote2Exercises: Exercise[] = [
+  // logica-nomenclatura-reglas → definition/understanding, rule/recall, example/syntax
+  {
+    id: "logica-nomenclatura-reglas-mc",
+    knowledgeUnitId: "logica-nomenclatura-reglas",
+    type: "multiple_choice",
+    dimension: "understanding",
+    difficulty: 1,
+    question: "¿Cuál nombre es inválido en Java?",
+    options: ["_contador", "$precio", "2doNombre", "miEdad"],
+    correctAnswer: "2doNombre",
+    explanation: "No puede iniciar con número. _contador y $precio son válidos.",
+  },
+  {
+    id: "logica-nomenclatura-reglas-recall",
+    knowledgeUnitId: "logica-nomenclatura-reglas",
+    type: "recall",
+    dimension: "recall",
+    difficulty: 1,
+    question: "Menciona una palabra reservada que NO puedes usar como variable:",
+    correctAnswer: "if",
+    alternativeAnswers: ["while", "for", "class", "public", "static", "int"],
+    explanation: "Reservadas if/while/for/class no son identificadores.",
+  },
+  {
+    id: "logica-nomenclatura-reglas-cc",
+    knowledgeUnitId: "logica-nomenclatura-reglas",
+    type: "code_completion",
+    dimension: "syntax",
+    difficulty: 1,
+    question: "Corrige el identificador con espacio:",
+    codeSnippet: "int mi edad = 20; // → int ___ = 20;",
+    correctAnswer: "miEdad",
+    alternativeAnswers: ["mi_edad", "miedad"],
+    explanation: "Sin espacio: miEdad (camelCase) o mi_edad, no 'mi edad'.",
+  },
+  // logica-convenciones-estilos
+  {
+    id: "logica-convenciones-estilos-mc",
+    knowledgeUnitId: "logica-convenciones-estilos",
+    type: "multiple_choice",
+    dimension: "understanding",
+    difficulty: 1,
+    question: "¿Qué estilo es correcto para variable en Java?",
+    options: ["fecha-de-nacimiento (kebab)", "fecha_de_nacimiento (snake)", "fechaDeNacimiento (camelCase)", "P44SW0RD (l33t)"],
+    correctAnswer: "fechaDeNacimiento (camelCase)",
+    explanation: "camelCase para vars; kebab/l33t no Java; snake para otros lenguajes.",
+  },
+  {
+    id: "logica-convenciones-estilos-recall",
+    knowledgeUnitId: "logica-convenciones-estilos",
+    type: "recall",
+    dimension: "recall",
+    difficulty: 1,
+    question: "¿Qué estilo usa constante y qué prefijo usa húngara legacy para String?",
+    correctAnswer: "SCREAMING_SNAKE_CASE y str",
+    alternativeAnswers: ["screaming snake case y str", "mayusculas con guion bajo y str", "SCREAMING y strNombre"],
+    explanation: "Const SCREAMING_SNAKE_CASE (FECHA_NACIMIENTO), húngara strNombre legacy.",
+  },
+  {
+    id: "logica-convenciones-estilos-cc",
+    knowledgeUnitId: "logica-convenciones-estilos",
+    type: "code_completion",
+    dimension: "syntax",
+    difficulty: 1,
+    question: "Escribe fechaDeNacimiento en SCREAMING_SNAKE_CASE:",
+    codeSnippet: "final String ___ = \"01/01/2000\";",
+    correctAnswer: "FECHA_DE_NACIMIENTO",
+    alternativeAnswers: ["FECHA_NACIMIENTO"],
+    explanation: "Constante en mayúsculas con _: FECHA_DE_NACIMIENTO.",
+  },
+];
+
 export const logicaProgramacionExercises: Exercise[] = [
   ...moyLote1Exercises,
+  ...moyLote2Exercises,
   ...javaExercises.filter((e) => LOGICA_UNIT_PREFIXES.some((p) => e.knowledgeUnitId.startsWith(p))),
 ];

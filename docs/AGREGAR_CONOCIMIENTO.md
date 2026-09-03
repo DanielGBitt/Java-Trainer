@@ -58,7 +58,7 @@ Este documento es la instrucción que la IA debe seguir cada vez que el usuario 
 
 ### 2.4 Mapa y posicionamiento
 
-- `src/game/map/builder.ts` `buildGameMap(courseId)` filtra por curso. Cada curso tiene su propia grilla `x 150/400/650 y 60-440`. **Hoy Lógica tiene 3 nodos** `node-datos (400,60)` Lote1 Moy → `node-operators (400,160)` → `node-logic (400,320)`; Intro y BD son `/* PLANTILLA ... */` comentadas que se descomentan al recibir primer aporte de ese curso. No tocar posiciones de otro curso.
+- `src/game/map/builder.ts` `buildGameMap(courseId)` filtra por curso. Cada curso tiene su propia grilla `x 150/400/650 y 60-440`. **Hoy Lógica tiene 4 nodos** `node-datos (400,60)` Lote1 → `node-estilo (650,110)` Lote2 → `node-operators (400,160)` → `node-logic (400,320)`; Intro y BD son `/* PLANTILLA ... */` comentadas que se descomentan al recibir primer aporte de ese curso. No tocar posiciones de otro curso.
 - Verificar `ViewBox 0 0 800 580` + `foreignObject 150x90 x-75 y-45` (no recorta `GameNode`).
 - Añadir conexión en `NODE_CONNECTIONS` plantilla correspondiente si la unit tiene prerequisite (descomenta línea de plantilla).
 
@@ -68,7 +68,7 @@ Este documento es la instrucción que la IA debe seguir cada vez que el usuario 
 npm run lint
 npm run build # debe dar 8/8 rutas (/, /map redirect, /c/[courseId]/map|study|practice, /practice|study/[nodeId], /progress)
 # smoke manual:
-# /c/logica-programacion/map → 3 nodos sin recorte (Datos → Operadores → Lógica)
+# /c/logica-programacion/map → 4 nodos sin recorte (Datos → Estilo → Operadores → Lógica)
 # /c/intro-programacion/map y /c/bases-de-datos/map → Próximamente (vacío, sin WorldMap)
 # /c/{curso}/study/{nodeId} muestra Definición/Regla/Ejemplo con rail+icono+mono
 # /c/{curso}/practice/{nodeId} incorrecto muestra "No era X — se esperaba Y." solo en recall/cc (<80 chars)

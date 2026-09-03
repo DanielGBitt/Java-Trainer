@@ -13,9 +13,9 @@ export const COURSES: Course[] = [
   {
     id: "logica-programacion",
     title: "Lógica de Programación",
-    description: "Operadores, comparaciones, aritmética y lógica booleana. Lote 1 Moy: Dato/Variable/Constante.",
+    description: "Operadores, comparaciones, aritmética y lógica booleana. Lotes 1-2 Moy: Datos + Reglas/Estilos.",
     icon: "🧠",
-    categories: ["fundamentals", "operators", "logic"],
+    categories: ["fundamentals", "conventions", "operators", "logic"],
   },
   {
     id: "bases-de-datos",
