@@ -24,10 +24,8 @@ const NODE_DEFINITIONS: NodeDefinition[] = [
   { id: "node-primitives", title: "Tipos Primitivos", icon: "🔢", category: "primitives", courseId: "intro-programacion", unitIds: ["java-int", "java-double-float", "java-boolean", "java-char", "java-byte-short-long"], x: 650, y: 260 },
   { id: "node-typing", title: "Tipado", icon: "🔤", category: "typing", courseId: "intro-programacion", unitIds: [], x: 150, y: 340 },
   */
-  /* PLANTILLA BD — y180/340
-  { id: "node-bd-modelado", title: "Modelado", icon: "🗄️", category: "bd-modelado", courseId: "bases-de-datos", unitIds: ["bd-entidad-atributo", "bd-relacion"], x: 400, y: 180 },
-  { id: "node-bd-sql", title: "SQL", icon: "📊", category: "bd-sql", courseId: "bases-de-datos", unitIds: ["bd-sql-select"], x: 400, y: 340 },
-  */
+  { id: "node-bd-modelado", title: "Modelado", icon: "🗄️", category: "bd-modelado", courseId: "bases-de-datos", unitIds: ["bd-base-datos", "bd-componentes", "bd-tipos", "bd-entidad", "bd-atributo", "bd-modelo-er"], x: 400, y: 180 },
+  { id: "node-bd-normalizacion", title: "Normalización", icon: "♻️", category: "bd-normalizacion", courseId: "bases-de-datos", unitIds: ["bd-normalizacion-1fn", "bd-normalizacion-2fn", "bd-normalizacion-3fn"], x: 400, y: 340 },
 ];
 
 const NODE_CONNECTIONS: [string, string][] = [
@@ -35,7 +33,7 @@ const NODE_CONNECTIONS: [string, string][] = [
   ["node-estilo", "node-operators"],
   ["node-operators", "node-logic"],
   /* PLANTILLA INTRO: ["node-fundamentals", "node-conventions"], ["node-fundamentals", "node-primitives"], ["node-primitives", "node-typing"], ["node-primitives", "node-operators"], */
-  /* PLANTILLA BD: ["node-bd-modelado", "node-bd-sql"], */
+  ["node-bd-modelado", "node-bd-normalizacion"],
 ];
 
 export function buildGameMap(courseId?: string): GameNode[] {

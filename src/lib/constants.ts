@@ -24,6 +24,9 @@ export const NODE_ICONS: Record<string, string> = {
   primitives: "🔢",
   operators: "➗",
   logic: "🧠",
+  "bd-modelado": "🗄️",
+  "bd-normalizacion": "♻️",
+  "bd-sql": "📊",
 };
 
 export const CATEGORY_LABELS: Record<string, string> = {
@@ -34,6 +37,7 @@ export const CATEGORY_LABELS: Record<string, string> = {
   operators: "Operadores",
   logic: "Lógica",
   "bd-modelado": "Modelado BD",
+  "bd-normalizacion": "Normalización",
   "bd-sql": "SQL",
 };
 
@@ -45,6 +49,7 @@ export const CATEGORY_ORDER = [
   "operators",
   "logic",
   "bd-modelado",
+  "bd-normalizacion",
   "bd-sql",
 ] as const;
 

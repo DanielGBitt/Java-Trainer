@@ -20,9 +20,9 @@ export const COURSES: Course[] = [
   {
     id: "bases-de-datos",
     title: "Bases de Datos",
-    description: "Próximamente — envía tus apuntes para generar el primer tema.",
+    description: "Fundamentos, modelado ER y normalización 1FN-3FN. De qué es una BD a datos sin redundancia.",
     icon: "🗄️",
-    categories: [],
+    categories: ["bd-modelado", "bd-normalizacion"],
   },
 ];
 
