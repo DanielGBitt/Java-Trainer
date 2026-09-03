@@ -18,12 +18,9 @@ const NODE_DEFINITIONS: NodeDefinition[] = [
   { id: "node-estilo", title: "Estilo", icon: "📝", category: "conventions", courseId: "logica-programacion", unitIds: ["logica-nomenclatura-reglas", "logica-convenciones-estilos"], x: 650, y: 110 },
   { id: "node-operators", title: "Operadores", icon: "➗", category: "operators", courseId: "logica-programacion", unitIds: ["java-op-aritmeticos", "java-op-comparacion", "java-modulo"], x: 400, y: 160 },
   { id: "node-logic", title: "Lógica", icon: "🧠", category: "logic", courseId: "logica-programacion", unitIds: ["java-not", "java-and", "java-or"], x: 400, y: 320 },
-  /* PLANTILLA INTRO — descomentar al recibir apuntes (grilla x150/400/650 y60-340, ViewBox 800x580)
-  { id: "node-fundamentals", title: "Fundamentos", icon: "📦", category: "fundamentals", courseId: "intro-programacion", unitIds: ["java-datos-vs-informacion", "java-variable-concepto", "java-asignacion", "java-constantes", "java-nombres-reglas", "java-tipo-dato"], x: 400, y: 60 },
-  { id: "node-conventions", title: "Convenciones", icon: "📝", category: "conventions", courseId: "intro-programacion", unitIds: ["java-camelcase", "java-snake-case", "java-hungarian-notation"], x: 150, y: 180 },
-  { id: "node-primitives", title: "Tipos Primitivos", icon: "🔢", category: "primitives", courseId: "intro-programacion", unitIds: ["java-int", "java-double-float", "java-boolean", "java-char", "java-byte-short-long"], x: 650, y: 260 },
-  { id: "node-typing", title: "Tipado", icon: "🔤", category: "typing", courseId: "intro-programacion", unitIds: [], x: 150, y: 340 },
-  */
+  { id: "node-intro-web", title: "Fundamentos Web", icon: "🌐", category: "intro-web", courseId: "intro-programacion", unitIds: ["intro-web-fundamentos", "intro-html-esqueleto"], x: 400, y: 60 },
+  { id: "node-intro-html", title: "HTML Semántico", icon: "📄", category: "intro-html", courseId: "intro-programacion", unitIds: ["intro-html-semantica", "intro-enlaces-imagenes"], x: 400, y: 180 },
+  { id: "node-intro-tablas", title: "Tablas y Formularios", icon: "📋", category: "intro-tablas", courseId: "intro-programacion", unitIds: ["intro-style-tablas-media", "intro-formularios"], x: 400, y: 340 },
   { id: "node-bd-modelado", title: "Modelado", icon: "🗄️", category: "bd-modelado", courseId: "bases-de-datos", unitIds: ["bd-base-datos", "bd-componentes", "bd-tipos", "bd-entidad", "bd-atributo", "bd-modelo-er"], x: 400, y: 180 },
   { id: "node-bd-normalizacion", title: "Normalización", icon: "♻️", category: "bd-normalizacion", courseId: "bases-de-datos", unitIds: ["bd-normalizacion-1fn", "bd-normalizacion-2fn", "bd-normalizacion-3fn"], x: 400, y: 340 },
 ];
@@ -32,7 +29,8 @@ const NODE_CONNECTIONS: [string, string][] = [
   ["node-datos", "node-estilo"],
   ["node-estilo", "node-operators"],
   ["node-operators", "node-logic"],
-  /* PLANTILLA INTRO: ["node-fundamentals", "node-conventions"], ["node-fundamentals", "node-primitives"], ["node-primitives", "node-typing"], ["node-primitives", "node-operators"], */
+  ["node-intro-web", "node-intro-html"],
+  ["node-intro-html", "node-intro-tablas"],
   ["node-bd-modelado", "node-bd-normalizacion"],
 ];
 

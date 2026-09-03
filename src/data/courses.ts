@@ -6,9 +6,9 @@ export const COURSES: Course[] = [
   {
     id: "intro-programacion",
     title: "Introducción a la Programación",
-    description: "Próximamente — envía tus apuntes para generar el primer tema.",
+    description: "Web, HTML5 semántico, enlaces/medios y tablas/formularios con <style>.",
     icon: "📦",
-    categories: [],
+    categories: ["intro-web", "intro-html", "intro-media", "intro-tablas"],
   },
   {
     id: "logica-programacion",
