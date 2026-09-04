@@ -8,7 +8,7 @@ export const basesDeDatosUnits: KnowledgeUnit[] = [
     difficulty: 1,
     tags: ["bd", "base de datos", "DBMS", "persistencia"],
     knowledge: [
-      { id: "bd-base-datos-def", type: "definition", content: "Base de datos = colección organizada y persistente de datos interrelacionados sobre un dominio." },
+      { id: "bd-base-datos-def", type: "definition", content: "Base de datos = colección organizada y persistente de datos interrelacionados sobre un dominio. Como una biblioteca: libros (datos) organizados por estanterías (tablas), con catálogo (consultas) que sobrevive al cierre (persistente)." },
       { id: "bd-base-datos-rule", type: "rule", content: "Toda BD se gestiona con un DBMS que controla almacenamiento, seguridad y consultas." },
       { id: "bd-base-datos-ex", type: "example", content: "BD Tienda(Clientes, Pedidos) → Clientes(id=7, nombre=Ana) persiste entre sesiones." },
       { id: "bd-base-datos-comp", type: "comparison", content: "BD estructurada con tablas vs fichero suelto sin relaciones ni control." },
@@ -21,7 +21,7 @@ export const basesDeDatosUnits: KnowledgeUnit[] = [
     difficulty: 1,
     tags: ["bd", "componentes", "DBMS", "hardware", "usuarios"],
     knowledge: [
-      { id: "bd-componentes-def", type: "definition", content: "Componentes BD = datos + hardware + software(DBMS) + usuarios/administradores." },
+      { id: "bd-componentes-def", type: "definition", content: "Componentes BD = datos + hardware + software(DBMS) + usuarios/administradores. Como un restaurante: ingredientes (datos) + cocina (hardware) + chef (DBMS) + comensales (usuarios)." },
       { id: "bd-componentes-rule", type: "rule", content: "Sin DBMS no hay BD gestionable; el DBMS media entre usuario y datos." },
       { id: "bd-componentes-ex", type: "example", content: "MySQL es el DBMS; la BD son las tablas Clientes y Pedidos dentro." },
       { id: "bd-componentes-mistake", type: "common_mistake", content: "Confundir BD con DBMS: MySQL no es la BD, es el gestor." },
@@ -34,7 +34,7 @@ export const basesDeDatosUnits: KnowledgeUnit[] = [
     difficulty: 1,
     tags: ["bd", "tipos", "relacional", "nosql", "jerarquica"],
     knowledge: [
-      { id: "bd-tipos-def", type: "definition", content: "Tipos: relacional (tablas), documental/NoSQL, jerárquica y en red." },
+      { id: "bd-tipos-def", type: "definition", content: "Tipos: relacional (tablas como Excel), documental/NoSQL (JSON flexible), jerárquica (árbol como carpeta), en red (conexiones múltiples). Relacional es el más usado en empresas." },
       { id: "bd-tipos-rule", type: "rule", content: "Usa relacional para integridad transaccional; NoSQL para flexibilidad y escalado horizontal." },
       { id: "bd-tipos-ex", type: "example", content: 'MySQL relacional vs MongoDB documento {id:7, nombre:"Ana"}.' },
       { id: "bd-tipos-comp", type: "comparison", content: "Relacional: esquema rígido + SQL vs NoSQL: flexible + sin esquema fijo." },
@@ -47,7 +47,7 @@ export const basesDeDatosUnits: KnowledgeUnit[] = [
     difficulty: 1,
     tags: ["bd", "entidad", "clave primaria", "modelado"],
     knowledge: [
-      { id: "bd-entidad-def", type: "definition", content: "Entidad = objeto del mundo real modelable con identidad propia (Cliente, Pedido)." },
+      { id: "bd-entidad-def", type: "definition", content: "Entidad = objeto del mundo real modelable con identidad propia (Cliente, Pedido, Producto). Como una ficha de contacto: cada persona es única y tiene datos que la identifican." },
       { id: "bd-entidad-rule", type: "rule", content: "Toda entidad lleva clave primaria única que la identifica." },
       { id: "bd-entidad-ex", type: "example", content: "Cliente(id, nombre, email) → id=7 identifica a Ana." },
       { id: "bd-entidad-comp", type: "comparison", content: "Entidad Cliente (tipo) vs instancia/fila Ana id=7 (dato concreto)." },
@@ -60,7 +60,7 @@ export const basesDeDatosUnits: KnowledgeUnit[] = [
     difficulty: 1,
     tags: ["bd", "atributo", "propiedad", "atomico"],
     knowledge: [
-      { id: "bd-atributo-def", type: "definition", content: "Atributo = propiedad de una entidad (nombre, precio, fecha)." },
+      { id: "bd-atributo-def", type: "definition", content: "Atributo = propiedad de una entidad (nombre, precio, fecha). Como las casillas de un formulario: nombre, email, teléfono — cada uno almacena un dato atómico (un solo valor)." },
       { id: "bd-atributo-rule", type: "rule", content: "Todo atributo es atómico, tipado y pertenece a una sola entidad." },
       { id: "bd-atributo-ex", type: "example", content: "Producto(nombre, precio, stock) → precio=9.99 numérico y atómico." },
       { id: "bd-atributo-mistake", type: "common_mistake", content: 'Telefonos "612,634" en una celda viola atomicidad; es multivaluado.' },
@@ -73,7 +73,7 @@ export const basesDeDatosUnits: KnowledgeUnit[] = [
     difficulty: 1,
     tags: ["bd", "modelo er", "cardinalidad", "relacion"],
     knowledge: [
-      { id: "bd-modelo-er-def", type: "definition", content: "Modelo ER = diagrama con entidades, atributos y relaciones con cardinalidad." },
+      { id: "bd-modelo-er-def", type: "definition", content: "Modelo ER = diagrama con entidades (rectángulos), atributos (óvalos) y relaciones (rombos) con cardinalidad (1:1, 1:N, N:M). Como un plano antes de construir la BD." },
       { id: "bd-modelo-er-rule", type: "rule", content: "Toda relación define cardinalidad 1:1, 1:N o N:M y participación." },
       { id: "bd-modelo-er-ex", type: "example", content: "Cliente 1:N Pedido — un cliente tiene muchos pedidos." },
       { id: "bd-modelo-er-proc", type: "procedure", content: "Sirve para diseñar la BD sin redundancia antes de crear tablas." },
@@ -86,7 +86,7 @@ export const basesDeDatosUnits: KnowledgeUnit[] = [
     difficulty: 2,
     tags: ["bd", "normalizacion", "1fn", "atomico"],
     knowledge: [
-      { id: "bd-normalizacion-1fn-def", type: "definition", content: "1FN = tabla con valores atómicos, sin grupos repetidos ni listas por celda." },
+      { id: "bd-normalizacion-1fn-def", type: "definition", content: "1FN = tabla con valores atómicos, sin grupos repetidos ni listas por celda. Regla: UN solo valor por celda. Ejemplo prohibido: '612,634' en una celda de teléfonos." },
       { id: "bd-normalizacion-1fn-rule", type: "rule", content: "Cada celda un solo valor; filas únicas con clave primaria." },
       { id: "bd-normalizacion-1fn-ex", type: "example", content: "Telefonos \"612,634\" → tabla ClienteTelefono(idCliente, telefono) una fila por teléfono." },
       { id: "bd-normalizacion-1fn-mistake", type: "common_mistake", content: 'Columna hobbies "leer, correr" viola 1FN por lista en una celda.' },
@@ -99,7 +99,7 @@ export const basesDeDatosUnits: KnowledgeUnit[] = [
     difficulty: 2,
     tags: ["bd", "normalizacion", "2fn", "dependencia parcial"],
     knowledge: [
-      { id: "bd-normalizacion-2fn-def", type: "definition", content: "2FN = en 1FN y sin dependencia parcial de la clave compuesta." },
+      { id: "bd-normalizacion-2fn-def", type: "definition", content: "2FN = en 1FN y sin dependencia parcial de la clave compuesta. Si la PK es (pedidoId, productoId), todo atributo debe depender de AMBAS partes, no solo de una." },
       { id: "bd-normalizacion-2fn-rule", type: "rule", content: "Si PK es (pedidoId, productoId), todo atributo depende de toda la clave." },
       { id: "bd-normalizacion-2fn-ex", type: "example", content: "PedidoProducto(pedidoId, productoId, nombreProducto) → extrae Producto(id, nombre)." },
       { id: "bd-normalizacion-2fn-comp", type: "comparison", content: "Parcial: productoId→nombre (violación) vs total: pedidoId+productoId→cantidad." },
@@ -112,7 +112,7 @@ export const basesDeDatosUnits: KnowledgeUnit[] = [
     difficulty: 2,
     tags: ["bd", "normalizacion", "3fn", "transitiva"],
     knowledge: [
-      { id: "bd-normalizacion-3fn-def", type: "definition", content: "3FN = en 2FN y sin dependencia transitiva entre atributos no clave." },
+      { id: "bd-normalizacion-3fn-def", type: "definition", content: "3FN = en 2FN y sin dependencia transitiva entre atributos no clave. Si A→B→C y B no es clave, C depende transitivamente de A a través de B — hay que extraerlo." },
       { id: "bd-normalizacion-3fn-rule", type: "rule", content: "Ningún atributo no clave depende de otro no clave." },
       { id: "bd-normalizacion-3fn-ex", type: "example", content: "Cliente(id, codPostal, ciudad) codPostal→ciudad → tabla Ciudad(codPostal, ciudad)." },
       { id: "bd-normalizacion-3fn-comp", type: "comparison", content: "2FN corrige clave compuesta; 3FN corrige cadena A→B→C transitiva." },

@@ -1,9 +1,10 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 import type { GameNode } from "@/types/game";
 import { GameNodeComponent } from "./GameNode";
 import { ConnectionLine } from "./ConnectionLine";
+import { MobileMap } from "./MobileMap";
 
 interface WorldMapProps {
   nodes: GameNode[];
@@ -11,6 +12,15 @@ interface WorldMapProps {
 }
 
 export function WorldMap({ nodes, onNodeClick }: WorldMapProps) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
   const nodeMap = useMemo(() => {
     const map = new Map<string, GameNode>();
     nodes.forEach((n) => map.set(n.id, n));
@@ -35,6 +45,10 @@ export function WorldMap({ nodes, onNodeClick }: WorldMapProps) {
 
     return conns;
   }, [nodes, nodeMap]);
+
+  if (isMobile) {
+    return <MobileMap nodes={nodes} onNodeClick={onNodeClick} />;
+  }
 
   return (
     <div className="relative w-full overflow-auto">

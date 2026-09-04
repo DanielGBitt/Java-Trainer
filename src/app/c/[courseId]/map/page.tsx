@@ -69,10 +69,8 @@ export default function CourseMapPage() {
         {course.icon} {course.title}
       </h1>
       <p className="text-muted-foreground text-sm sm:text-base mb-6">{course.description}</p>
-      <div className="overflow-x-auto -mx-4 sm:-mx-6 px-4 sm:px-6 overscroll-contain">
-        <div className="min-w-[760px]">
-          <WorldMap nodes={nodes} onNodeClick={handleNodeClick} />
-        </div>
+      <div className="-mx-4 sm:mx-0 px-4 sm:px-0">
+        <WorldMap nodes={nodes} onNodeClick={handleNodeClick} />
       </div>
     </div>
   );

@@ -11,7 +11,7 @@ export const operatorsUnits: KnowledgeUnit[] = [
       {
         id: "arith-definition",
         type: "definition",
-        content: "Los operadores aritméticos realizan operaciones matemáticas sobre valores numéricos.",
+        content: "Los operadores aritméticos realizan operaciones matemáticas sobre valores numéricos: + (suma), - (resta), * (multiplicación), / (división), % (módulo/residuo). Como una calculadora pero con reglas especiales.",
       },
       {
         id: "arith-operators",
@@ -33,6 +33,11 @@ export const operatorsUnits: KnowledgeUnit[] = [
         type: "rule",
         content: "Precedencia: * / % se evalúan antes de + -. Usa paréntesis para claridad: (a + b) * c.",
       },
+      {
+        id: "arith-mistake",
+        type: "common_mistake",
+        content: "10 / 3 = 3, NO 3.33. La división entre enteros trunca el decimal. Usa 10.0 / 3 para obtener 3.33.",
+      },
     ],
   },
   {
@@ -45,7 +50,7 @@ export const operatorsUnits: KnowledgeUnit[] = [
       {
         id: "comp-definition",
         type: "definition",
-        content: "Los operadores de comparación comparan dos valores y devuelven un boolean (true o false).",
+        content: "Los operadores de comparación comparan dos valores y devuelven un boolean (true o false). Como una pregunta de sí/no: '¿5 es mayor que 3?' → true. Nunca devuelven un número.",
       },
       {
         id: "comp-operators",
@@ -79,7 +84,7 @@ export const operatorsUnits: KnowledgeUnit[] = [
       {
         id: "mod-definition",
         type: "definition",
-        content: "El operador % (módulo) devuelve el residuo de la división entera entre dos números.",
+        content: "El operador % (módulo) devuelve el residuo de la división entera entre dos números. Útil para: verificar pares (x%2==0), extraer dígitos, crear ciclos (día de semana = i%7).",
       },
       {
         id: "mod-syntax",

@@ -11,7 +11,7 @@ export const logicUnits: KnowledgeUnit[] = [
       {
         id: "not-definition",
         type: "definition",
-        content: "El operador ! (NOT) invierte el valor boolean: true se convierte en false y viceversa.",
+        content: "El operador ! (NOT) invierte el valor boolean: true → false, false → true. Como un interruptor de luz: si está encendido (!true), lo apagas; si está apagado (!false), lo enciendes.",
       },
       {
         id: "not-syntax",
@@ -28,6 +28,11 @@ export const logicUnits: KnowledgeUnit[] = [
         type: "application",
         content: "Útil para invertir condiciones: if (!esAdmin) significa 'si NO es administrador'.",
       },
+      {
+        id: "not-mistake",
+        type: "common_mistake",
+        content: "!!true es doble negación innecesaria. No confundir ! (NOT lógico) con ~ (NOT bitwise) — son operadores distintos.",
+      },
     ],
   },
   {
@@ -40,7 +45,7 @@ export const logicUnits: KnowledgeUnit[] = [
       {
         id: "and-definition",
         type: "definition",
-        content: "El operador && (AND) devuelve true solo si AMBOS operandos son true.",
+        content: "El operador && (AND) devuelve true solo si AMBOS operandos son true. Como una puerta con dos candados: necesitas AMBAS llaves para abrirla. Si una falla, no abre.",
       },
       {
         id: "and-truth-table",
@@ -74,7 +79,7 @@ export const logicUnits: KnowledgeUnit[] = [
       {
         id: "or-definition",
         type: "definition",
-        content: "El operador || (OR) devuelve true si AL MENOS UNO de los operandos es true.",
+        content: "El operador || (OR) devuelve true si AL MENOS UNO de los operandos es true. Como una puerta con dos interruptores: con que UNO esté encendido, hay luz.",
       },
       {
         id: "or-truth-table",
